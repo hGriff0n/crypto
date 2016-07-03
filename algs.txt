@@ -1,0 +1,137 @@
+key generation
+hash functions
+
+Caesar
+Affine
+Atbash
+ROT13
+Null cipher
+One time pad
+Polybius square
+ADFGVX
+Bifid
+Tap Code
+3D
+Trifid
+Nihilist
+VIC cipher
+Two-square
+Four-square
+Autokey
+Chaocipher
+Great
+Hill
+Keyword
+Running Key
+Rail fence
+Alberti
+BATCO
+Slidex
+Beaufort
+Dvorak
+Enigma
+Kama Sutra
+Navajo code
+Pigpen
+Playfair
+Polyalphabetic
+Rasterschluessel 44
+Reihnenschieber
+Reservehandverfahren
+Scytale
+Smithy code
+Solitaire
+Straddling checkerboard
+Tabula recta
+Transposition
+Trithemius
+Vigenere
+VIC
+Grille
+A5/1
+A5/2
+BMGL
+Chameleon
+Fish
+Helix
+ISAAC
+Leviathan
+Lili-128
+MUGI-CRYPTREC
+MULTI-So1-Cryptec
+Panama
+RC4
+CipherSaber
+Salsa20
+SEAL
+snow
+sober
+wake
+product cipher
+feistel cipher
+aes
+anubis
+bear
+blowfish
+camellia
+cast-128 / cast5
+cipherunicorn-a
+cmea
+cs-cipher
+des
+deal
+des-x
+feal
+gdes
+grand cru
+hierocrypt-3
+idea nxt
+idea
+ibc
+kasumi
+khazad
+khufu
+khafre
+lion
+loki89
+lucifer
+magenta
+mars
+misty1
+nimbus
+noekeon
+nush
+q
+rc2
+safer
+sc2000
+serpent
+shacal-1
+shark
+square
+tea
+triple des
+twofish
+xtea
+3-way
+enigma
+purple
+sigaba
+typex
+jn-25
+naval cypher 3
+ace-kem
+chor-rivest
+diffie-hellman
+el gamal
+ellipic curve cryptography
+psec-kem
+epoc
+merkle-hellman knapsack
+mceliece
+niederreiter
+ntruencrypt
+rsa
+rabin
+threshold
+xtr

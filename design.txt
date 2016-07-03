@@ -1,0 +1,5 @@
+the user should be able to
+	"step" through algorithm application (but not sacrifice speed if wanted)
+		// generator ???
+	modify algorithm parameters easily (ie change block bit size)
+	compose algorithm applications
