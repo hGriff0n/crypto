@@ -1,9 +1,8 @@
 package crypto.classical
 
-class Caeser(val shft: Int) {
-    private val lc = 'a' to 'z'
-    private val uc = 'A' to 'Z'
+import crypto.Cipher;
 
+class Caeser(val shft: Int) extends Cipher {
     private def encode(c: Char, sh: Int): Char = c match {
         case c if lc.contains(c) =>
         	((c.toInt - 71 + sh) % 26 + 97).toChar
@@ -12,9 +11,6 @@ class Caeser(val shft: Int) {
         case c => c
     }
 
-    def encrypt(msg: String): String = 
-        for (c <- msg) yield encode(c, shft)
-
-    def decrypt(msg: String): String = 
-        for (c <- msg) yield encode(c, -shft)
+    def encrypt(msg: String): String = for (c <- msg) yield encode(c, shft)
+    def decrypt(msg: String): String = for (c <- msg) yield encode(c, -shft)
 }
