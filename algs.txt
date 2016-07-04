@@ -3,6 +3,7 @@ hash functions
 
 Caesar
 Affine
+
 Atbash
 ROT13
 Null cipher
