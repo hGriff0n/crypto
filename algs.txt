@@ -3,8 +3,8 @@ hash functions
 
 Caesar
 Affine
+Atbash          = Affine(25, 25)
 
-Atbash
 ROT13
 Null cipher
 One time pad

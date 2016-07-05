@@ -5,7 +5,7 @@ import crypto.utils.modInv;
 
 // TODO: Is there any way I can improve the error reporting ???
 class Affine(a: Int, b: Int) extends Cipher {
-    private val inv: Int = modInv(a, 25) match {
+    private val inv: Int = modInv(a, 26) match {
         case Some(num) => num
         case None => throw new Exception(s"$a and 26 are not coprime")
     }
@@ -20,5 +20,7 @@ class Affine(a: Int, b: Int) extends Cipher {
     }
 
     def encrypt(msg: String): String = for (c <- msg) yield encode(c, a, b)
-    def decrypt(msg: String): String = for (c <- msg) yield encode(c, inv, inv * -b)
+    def decrypt(msg: String): String = for (c <- msg) yield encode(c, inv, inv * -b % 26)
 }
+
+class Atbash extends Affine(25, 25)
