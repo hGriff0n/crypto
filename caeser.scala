@@ -17,3 +17,5 @@ class Caeser(val shft: Int) extends Cipher {
     def encrypt(msg: String): String = for (c <- msg) yield encode(c, shft)
     def decrypt(msg: String): String = for (c <- msg) yield encode(c, -shft)
 }
+
+class Rot13 extends Caeser(13)

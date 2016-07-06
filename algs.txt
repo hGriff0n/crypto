@@ -4,8 +4,8 @@ hash functions
 Caesar
 Affine
 Atbash          = Affine(25, 25)
+ROT13           = Caeser(13)
 
-ROT13
 Null cipher
 One time pad
 Polybius square
