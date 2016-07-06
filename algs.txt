@@ -1,12 +1,13 @@
 key generation
 hash functions
+Null cipher     <- This is an encryption scheme, I think ??
 
 Caesar
 Affine
 Atbash          = Affine(25, 25)
 ROT13           = Caeser(13)
+Iden
 
-Null cipher
 One time pad
 Polybius square
 ADFGVX
