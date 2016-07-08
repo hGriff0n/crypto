@@ -1,21 +1,26 @@
 key generation
 hash functions
-Null cipher     <- This is an encryption scheme, I think ??
 
+Null cipher     <- This is an encryption scheme, I think ??
+One time pad
+
+## Implemented Ciphers
 Caesar
 Affine
 Atbash          = Affine(25, 25)
 ROT13           = Caeser(13)
 Iden
 
-One time pad
-Polybius square
+## Unimplemented Ciphers
+Polybius square <- This isn't a cipher, but it is used by several other ciphers.
+                <- I need a way to easily generate and interact with one by some defined rules
+Playfair
 ADFGVX
 Bifid
+Nihilist
 Tap Code
 3D
 Trifid
-Nihilist
 VIC cipher
 Two-square
 Four-square
@@ -35,7 +40,6 @@ Enigma
 Kama Sutra
 Navajo code
 Pigpen
-Playfair
 Polyalphabetic
 Rasterschluessel 44
 Reihnenschieber
