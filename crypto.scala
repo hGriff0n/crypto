@@ -9,7 +9,7 @@ object demo {
         val cipher = new Iden
         val msg = cipher.encrypt("Hello")
 
-        var square = new Polybius(5, "Hello World")
+        var square = new Polybius(5, "jump")
         println("" + square.translate(2, 3))
         println("" + square.translate('N'))
 

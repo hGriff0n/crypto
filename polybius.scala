@@ -1,13 +1,14 @@
 package crypto.utils
 
 object Polybius {
-    private def genKeyFn(key: String): (Int, Int, Int) => Char = {
-        val actkey = key diff " ,J"                             // Handle I/J split for now (not the best solution)
-        val rem = "ABCDEFGHIKLMNOPQRSTUVWXYZ" diff key           // by removing J from the set
+    // "static" method to enable implementing `this(Int, String)` in terms of `this(Int, Fn)`
+    private def genKeyFn(key: String, s: Int): (Int, Int, Int) => Char = {
+        val tmp = (if (s == 5) key.replace('J', 'I').replace('j', 'I') else key).distinct.toUpperCase diff ", "                 // Replace j's with i's if the square can't hold all letters
+        val actkey = tmp + ((if (s == 5) "ABCDEFGHIKLMNOPQRSTUVWXYZ" else "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890") diff tmp)
 
         def keyFn(iter: Int, x: Int, y: Int) = iter match {
             case iter if (iter < actkey.length) => actkey(iter)
-            case iter => rem(iter - actkey.length)
+            case iter => ' '
         }
 
         keyFn
@@ -15,9 +16,8 @@ object Polybius {
 }
 
 
-// TODO: Find a better way of handling I/J in keys
-// TODO: Restrict square to 5 or 6 (and allow digits in 6)
 class Polybius private (s: Int) {
+    if (s < 5 || s > 6) throw new Exception(s"Polybius($s): s must be between 5 and 6")
     private var square: Array[Array[Char]] = Array.ofDim[Char](s, s)
 
     // Construct the square based on a given rule function
@@ -32,7 +32,7 @@ class Polybius private (s: Int) {
     }
 
     // Construct the square from the given key
-    def this(siz: Int, key: String) = this(siz, Polybius.genKeyFn(key.distinct.toUpperCase))
+    def this(siz: Int, key: String) = this(siz, Polybius.genKeyFn(key, siz))
 
     // Get the character at the given position
     def translate(x: Int, y: Int) = square(x)(y)
