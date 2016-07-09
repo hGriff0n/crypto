@@ -3,8 +3,8 @@ package crypto.classical;
 import crypto.Cipher;
 import crypto.utils.Polybius;
 
-// TODO: Figure out what period means in terms of Bifid
-class Bifid extends Cipher {
+// TODO: Think of changing period to an option
+class Bifid(period: Int) extends Cipher {
     private def mixed() = {
         val key = scala.util.Random.shuffle("ABCDEFGHIKLMNOPQRSTUVWXYZ".toList).mkString("")
 
@@ -12,18 +12,34 @@ class Bifid extends Cipher {
     }
 
     private val sq = new Polybius(5, mixed())
+    //sq.print
 
+    def this() = this(0)
+
+    // Note: This method removes spaces from the passed message
     def encrypt(msg: String) = {
-        val (f, s) = (for (c <- msg) yield sq.translate(c)).unzip
-        val res = for (pair <- (f ++ s).sliding(2, 2)) yield sq.translate(pair(0), pair(1))
+        val groups = (for (c <- msg.replaceAll(" ",""))
+            yield sq.translate(c))
+                .grouped(if (period == 0) msg.length else period)
+                .map(a => {
+                    val (f, s) = a.unzip
+                    (f ++ s).sliding(2, 2)
+                })
+        val res = for (frame <- groups; pair <- frame) yield sq.translate(pair(0), pair(1))
         
         res.mkString("")
     }
 
     def decrypt(msg: String) = {
-        val rows = (for (c <- msg) yield sq.translate(c)).toList.flatMap(t => List(t._1, t._2))
-        val (f, s) = rows.splitAt(rows.size / 2)                        // Is there a method for this ???
-        val res = for (pair <- f zip s) yield sq.translate(pair)
+        val p_length = if (period == 0) msg.length else period
+        val groups = (for (c <- msg)
+            yield sq.translate(c))
+                .grouped(p_length)
+                .map(a => {
+                    val (f, s) = a.flatMap(t => Vector(t._1, t._2)).splitAt(p_length)              // Is there a method for this ???
+                    f zip s
+                })
+        val res = for (frame <- groups; pair <- frame) yield sq.translate(pair)
         
         res.mkString("")
     }
