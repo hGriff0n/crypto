@@ -6,13 +6,12 @@ import utils._;
 
 object demo {
     def main(args: Array[String]): Unit = {        
-        val cipher = new Playfair("Hello")
-        val msg = cipher.encrypt("Bobby")
+        val cipher = new Bifid
+        val msg = cipher.encrypt("FLEEATONCE")
 
-        println(msg)    // irk
-        println(cipher.decrypt(msg)) // rip
+        println(msg)
+        println(cipher.decrypt(msg))
     }
 }
 
-// TODO: Get Polybius Square working
 // TODO: Get makefile/etc. working

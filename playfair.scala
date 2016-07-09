@@ -3,10 +3,8 @@ package crypto.classical;
 import crypto.Cipher;
 import crypto.utils.Polybius;
 
-// TODO: Improve implementation
 class Playfair(key: String) extends Cipher {
     val sq = new Polybius(5, key)
-    private val everyTwoCharacters = "(?<=\\G.{2})"
 
     private def encode(pair: String, off: Int): String = {
         val (row0, col0) = sq.translate(pair(0))
@@ -22,12 +20,12 @@ class Playfair(key: String) extends Cipher {
     }
 
     def encrypt(msg: String) = 
-        (for (pair <- (if (msg.length % 2 == 1) msg + "X" else msg).toUpperCase.split(everyTwoCharacters))
+        (for (pair <- (if (msg.length % 2 == 1) msg + "X" else msg).toUpperCase.replace('I', 'J').sliding(2, 2))
             yield encode(pair, 1)).mkString("")
 
     // Note: This doesn't handle replacing added X's as there's no way to determine
         // which ones where added programatically (in the current framework at least) 
     def decrypt(msg: String) =
-        (for (pair <- msg.split(everyTwoCharacters))
+        (for (pair <- msg.sliding(2, 2))
             yield encode(pair, 4)).mkString("")
 }

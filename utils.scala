@@ -26,4 +26,5 @@ package object utils {
         else         None
     }
  
+    val everyTwoCharacters = "(?<=\\G.{2})"
 }
