@@ -30,8 +30,6 @@ class Polybius private (s: Int) {
             iter += 1
         }     
     }
-
-    // Construct the square from the given key
     def this(siz: Int, key: String) = this(siz, Polybius.genKeyFn(key, siz))
 
     // Get the character at the given position

@@ -10,14 +10,14 @@ Affine
 Atbash          = Affine(25, 25)
 ROT13           = Caeser(13)
 Iden
-
-## Unimplemented Ciphers
-Polybius square <- This isn't a cipher, but it is used by several other ciphers.
-                <- I need a way to easily generate and interact with one by some defined rules
 Playfair
+
+## Implementing
 ADFGVX
 Bifid
 Nihilist
+
+## Unimplemented Ciphers
 Tap Code
 3D
 Trifid
