@@ -5,12 +5,6 @@ import crypto.utils.Polybius;
 
 // TODO: Think of changing period to an option
 class Bifid(period: Int) extends Cipher {
-    private def mixed() = {
-        val key = scala.util.Random.shuffle("ABCDEFGHIKLMNOPQRSTUVWXYZ".toList).mkString("")
-
-        (iter: Int, x: Int, y: Int) => key(iter)
-    }
-
     private val sq = new Polybius(5, mixed())
     //sq.print
 
