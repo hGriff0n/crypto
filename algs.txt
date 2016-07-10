@@ -11,11 +11,12 @@ Atbash          = Affine(25, 25)
 ROT13           = Caeser(13)
 Iden
 Playfair
+Bifid
+Nihilist
 
 ## Implementing
 ADFGVX
-Bifid
-Nihilist
+ADFGX
 
 ## Unimplemented Ciphers
 Tap Code
