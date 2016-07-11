@@ -9,7 +9,12 @@ object demo {
         val cipher = new ADFGVX("PRIVACY")
         val msg = cipher.encrypt("ATTACK at 1200am")
 
-        println(msg)        // DGDDDAGDDGAFADDFDADVDVFAADVX
+        //val cipher = new ADFGX("CARGO")
+        //val msg = cipher.encrypt("Attack at once")
+
+        println(msg)
+        println(msg == "DGDDDAGDDGAFADDFDADVDVFAADVX")
+        //println(msg == "FAXDFADDDGDGFFFAFAXAFAFX")
         println(cipher.decrypt(msg))
     }
 }

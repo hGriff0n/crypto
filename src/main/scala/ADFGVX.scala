@@ -13,19 +13,18 @@ class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
     private val encKey = key.zipWithIndex.sortWith((a, b) => a._1 < b._1).map(_._2).toList
     private val decKey = encKey.zipWithIndex.sortWith((a, b) => a._1 < b._1).map(_._2).toList
 
-    private def columnTranspose(msg: List[Char], num: Int) =
-        msg.zipWithIndex                            // Add the indices to the list
-            .map(a => (a._1, a._2 % num))           // So that I can group them into the columns
-            .sortWith((a, b) => a._2 < b._2)        // Sort the list so that items in the same column are next to each other
-            .map(_._1)                              // Remove the indices from the list
-            .grouped(num)                           // And then group by column
+    private def columnTranspose(msg: List[Char], num_col: Int) =
+        msg.zipWithIndex                                        // Add the indices to the list
+            .map(a => (a._1, a._2 % num_col))                   // So that I can group them into the columns
+            .sortWith((a, b) => a._2 < b._2)                    // Sort the list so that items in the same column are next to each other
+            .map(_._1)                                          // Remove the indices from the list
+            .grouped(math.ceil(msg.length / num_col.toFloat).toInt)	    // And then group by column  <- This is the wrong number
 
     def this(key: String) = this(key, false)
 
-    // Is this failing on 1 ??
     def encrypt(msg: String) = {
         // Translate the message into it's flattened polybius coordinates
-        val coords = (for (c <- msg.replaceAll(" ", "")) yield sq.translate(c)).toList
+        val coords = (for (c <- msg.toUpperCase.replaceAll(" ", "")) yield sq.translate(c)).toList
             .flatMap(t => List(t._1, t._2))         // Flatten the resulting tuples
             .map(_ match {
                 case 0 => 'A'                       // Translate coordinates into ADFG(V)X
@@ -45,20 +44,22 @@ class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
 
     def decrypt(msg: String) = {
         val num_over = msg.length % key.length
-        val num_take = msg.length / key.length
+        val num_take = msg.length / key.length.toFloat
+        val max = math.ceil(num_take).toInt
+        val min = math.floor(num_take).toInt
 
         // Divide the message into the columns
             // Note: Since the columns are shuffled in encryption, a simple grouping wouldn't be correct
         var iter = msg.iterator
         val cols = encKey.map(a => {
-            val num_items = num_take + (if (a < num_over) 1 else 0)
+            val num_items = if (a < num_over) max else min
             val ret = iter.take(num_items)
             iter = iter.drop(num_items)         // Update the iterator
             ret.toList
         }).toList
 
         // Put the columns back into the correct ordering
-        val tmp = columnTranspose(decKey.flatMap(cols(_)).toList, num_take + 1)
+        val orig = columnTranspose(decKey.flatMap(cols(_)).toList, max).toList
             .flatMap(_.map(_ match {                    // Undo the ADFG(V)X translations
                 case 'A' => 0
                 case 'D' => 1
@@ -69,7 +70,7 @@ class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
             })).toList
 
         // Translate the coordinates back to the message
-        (for (co <- tmp.sliding(2, 2)) yield sq.translate(co(0), co(1))).mkString
+        (for (co <- orig.sliding(2, 2)) yield sq.translate(co(0), co(1))).mkString
     }
 }
 
