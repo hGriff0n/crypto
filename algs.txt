@@ -3,6 +3,7 @@ hash functions
 
 Null cipher     <- This is an encryption scheme, I think ??
 One time pad
+https://en.wikipedia.org/wiki/Transposition_cipher#Columnar_transposition
 
 ## Implemented Ciphers
 Caesar
@@ -13,10 +14,8 @@ Iden
 Playfair
 Bifid
 Nihilist
-
-## Implementing
 ADFGVX
-ADFGX
+ADFGX           = ADFGVX(_, false)
 
 ## Unimplemented Ciphers
 Tap Code
