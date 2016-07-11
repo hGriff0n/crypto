@@ -6,10 +6,10 @@ import utils._;
 
 object demo {
     def main(args: Array[String]): Unit = {        
-        val cipher = new Nihilist("Russian")
-        val msg = cipher.encrypt("DYNAMITE WINTER PALACE")
+        val cipher = new ADFGVX("PRIVACY")
+        val msg = cipher.encrypt("ATTACK at 1200am")
 
-        println(msg)
+        println(msg)        // DGDDDAGDDGAFADDFDADVDVFAADVX
         println(cipher.decrypt(msg))
     }
 }

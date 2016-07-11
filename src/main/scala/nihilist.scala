@@ -4,7 +4,7 @@ import crypto.Cipher;
 import crypto.utils.Polybius;
 
 class Nihilist(key: String) extends Cipher {
-    private val sq = new Polybius(5, mixed())
+    private val sq = new Polybius(5, mixed(false))
     private val cKey =
         key.toUpperCase.map(c => {
             val (t, o) = sq.translate(c)
@@ -30,6 +30,6 @@ class Nihilist(key: String) extends Cipher {
                 iter = (iter + 1) % cKey.size
                 val tens: Int = num / 10
                 sq.translate(tens, num - (tens * 10))
-            }).mkString("")
+            }).mkString
     }
 }

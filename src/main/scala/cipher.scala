@@ -4,10 +4,12 @@ trait Cipher {
     protected val lc = 'a' to 'z'
     protected val uc = 'A' to 'Z'
     
-    protected def mixed() = {
-        val key = scala.util.Random.shuffle("ABCDEFGHIKLMNOPQRSTUVWXYZ".toList).mkString("")
+    protected def mixed(incl_num: Boolean) = {
+        val key = scala.util.Random.shuffle(
+            (if (incl_num) "ABCDEFGHIKLMNOPQRSTUVWXYZ0123456789" else "ABCDEFGHIKLMNOPQRSTUVWXYZ")
+            .toList).iterator
 
-        (iter: Int, x: Int, y: Int) => key(iter)
+        (iter: Int, x: Int, y: Int) => key.next
     }
 
     def encrypt(msg: String): String

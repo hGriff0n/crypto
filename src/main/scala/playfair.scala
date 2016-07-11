@@ -21,11 +21,11 @@ class Playfair(key: String) extends Cipher {
 
     def encrypt(msg: String) = 
         (for (pair <- (if (msg.length % 2 == 1) msg + "X" else msg).toUpperCase.replace('I', 'J').sliding(2, 2))
-            yield encode(pair, 1)).mkString("")
+            yield encode(pair, 1)).mkString
 
     // Note: This doesn't handle replacing added X's as there's no way to determine
         // which ones where added programatically (in the current framework at least) 
     def decrypt(msg: String) =
         (for (pair <- msg.sliding(2, 2))
-            yield encode(pair, 4)).mkString("")
+            yield encode(pair, 4)).mkString
 }

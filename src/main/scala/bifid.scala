@@ -5,7 +5,7 @@ import crypto.utils.Polybius;
 
 // TODO: Think of changing period to an option
 class Bifid(period: Int) extends Cipher {
-    private val sq = new Polybius(5, mixed())
+    private val sq = new Polybius(5, mixed(false))
     //sq.print
 
     def this() = this(0)
@@ -21,7 +21,7 @@ class Bifid(period: Int) extends Cipher {
                 })
         val res = for (frame <- groups; pair <- frame) yield sq.translate(pair(0), pair(1))
         
-        res.mkString("")
+        res.mkString
     }
 
     def decrypt(msg: String) = {
@@ -35,6 +35,6 @@ class Bifid(period: Int) extends Cipher {
                 })
         val res = for (frame <- groups; pair <- frame) yield sq.translate(pair)
         
-        res.mkString("")
+        res.mkString
     }
 }
