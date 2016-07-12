@@ -3,3 +3,5 @@ the user should be able to
 		// generator ???
 	modify algorithm parameters easily (ie change block bit size)
 	compose algorithm applications
+
+Add small history/explanation of cipher in class comments

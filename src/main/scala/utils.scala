@@ -25,6 +25,9 @@ package object utils {
         if (coprime) Some((inv + m) % m)
         else         None
     }
+
+    def tabula(c: Char, sh: Int) = ((c.toInt - 39 + sh) % 26 + 65).toChar
+    def tabula(a: Char, b: Char): Char = tabula(a, b.toInt - 65)
  
     val everyTwoCharacters = "(?<=\\G.{2})"
 }

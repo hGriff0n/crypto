@@ -17,13 +17,16 @@ Nihilist
 ADFGVX
 ADFGX           = ADFGVX(_, false)
 
-## Unimplemented Ciphers
-Tap Code
-3D
+## Implementing
 Trifid
-VIC cipher
+VIC Cipher
 Two-square
 Four-square
+Util.Checkerboard
+Util.tabula
+    reimplement caeser in terms of this
+
+## Unimplemented Ciphers
 Autokey
 Chaocipher
 Great
@@ -48,7 +51,6 @@ Scytale
 Smithy code
 Solitaire
 Straddling checkerboard
-Tabula recta
 Transposition
 Trithemius
 Vigenere
@@ -141,3 +143,7 @@ rsa
 rabin
 threshold
 xtr
+3D
+
+## Possible Options (Not really ciphers, but I can see a place)
+Tap Code

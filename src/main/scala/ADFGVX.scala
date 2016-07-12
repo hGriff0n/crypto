@@ -3,22 +3,18 @@ package crypto.classical;
 import crypto.Cipher;
 import crypto.utils.Polybius;
 
-// TODO: Ensure that ADFGVX works
-// TODO: Improve implementation
-// TODO: Ensure that mixed can create a string with numbers in it
 class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
-    //private val sq = new Polybius(if (adfgx) 5 else 6, mixed(adfgx))
-    private val sq = new Polybius(if (adfgx) 5 else 6, if (adfgx) "BTALPDHOZKQFVSNGJCUXMREWY" else "NA1C3H8TB2OME5WRPD4F6G7I9J0KLQSUVXYZ")
+    private val sq = new Polybius(if (adfgx) 5 else 6, mixed(!adfgx))
 
     private val encKey = key.zipWithIndex.sortWith((a, b) => a._1 < b._1).map(_._2).toList
     private val decKey = encKey.zipWithIndex.sortWith((a, b) => a._1 < b._1).map(_._2).toList
 
     private def columnTranspose(msg: List[Char], num_col: Int) =
-        msg.zipWithIndex                                        // Add the indices to the list
-            .map(a => (a._1, a._2 % num_col))                   // So that I can group them into the columns
-            .sortWith((a, b) => a._2 < b._2)                    // Sort the list so that items in the same column are next to each other
-            .map(_._1)                                          // Remove the indices from the list
-            .grouped(math.ceil(msg.length / num_col.toFloat).toInt)	    // And then group by column  <- This is the wrong number
+        msg.zipWithIndex                                                // Add the indices to the list
+            .map(a => (a._1, a._2 % num_col))                           // So that I can group them into the columns
+            .sortWith((a, b) => a._2 < b._2)                            // Sort the list so that items in the same column are next to each other
+            .map(_._1)                                                  // Remove the indices from the list
+            .grouped(math.ceil(msg.length / num_col.toFloat).toInt)	    // And then group by column
 
     def this(key: String) = this(key, false)
 
@@ -26,8 +22,8 @@ class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
         // Translate the message into it's flattened polybius coordinates
         val coords = (for (c <- msg.toUpperCase.replaceAll(" ", "")) yield sq.translate(c)).toList
             .flatMap(t => List(t._1, t._2))         // Flatten the resulting tuples
-            .map(_ match {
-                case 0 => 'A'                       // Translate coordinates into ADFG(V)X
+            .map(_ match {                          // Translate coordinates into ADFG(V)X
+                case 0 => 'A'
                 case 1 => 'D'
                 case 2 => 'F'
                 case 3 => 'G'
