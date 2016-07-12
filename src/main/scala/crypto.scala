@@ -6,8 +6,8 @@ import utils._;
 
 object demo {
     def main(args: Array[String]): Unit = {        
-        val cipher = new Rot13
-        val msg = cipher.encrypt("IRQ")
+        val cipher = new TwoSquare
+        val msg = cipher.encrypt("HelloX")
 
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
         // Trifid: Treaty ends Boer War. => MUAFN.EQRKREUTXQBW

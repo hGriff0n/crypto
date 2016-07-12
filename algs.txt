@@ -5,6 +5,12 @@ Null cipher     <- This is an encryption scheme, I think ??
 One time pad
 https://en.wikipedia.org/wiki/Transposition_cipher#Columnar_transposition
 
+## Utilites
+euclid
+mod inverse
+tabula recta
+polybius
+
 ## Implemented Ciphers
 Caesar
 Affine
@@ -23,8 +29,6 @@ VIC Cipher
 Two-square
 Four-square
 Util.Checkerboard
-Util.tabula
-    reimplement caeser in terms of this
 
 ## Unimplemented Ciphers
 Autokey
