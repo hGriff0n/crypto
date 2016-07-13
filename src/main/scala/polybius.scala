@@ -16,7 +16,7 @@ object Polybius {
 }
 
 
-class Polybius private (s: Int) {
+class Polybius private (s: Int) extends Translator {
     if (s < 5 || s > 6) throw new Exception(s"Polybius($s): s must be between 5 and 6")
     private var square: Array[Array[Char]] = Array.ofDim[Char](s, s)
 
@@ -34,7 +34,6 @@ class Polybius private (s: Int) {
 
     // Get the character at the given position
     def translate(x: Int, y: Int) = square(x)(y)
-    def translate(t: (Int, Int)): Char = translate(t._1, t._2)
 
     // Get the position of the given character
         // Note: Not the most efficient implementation for encoding (could be memoized), but the losses are negligable

@@ -29,10 +29,11 @@ package object utils {
     def tabula(c: Char, sh: Int) = ((c.toInt - 39 + sh) % 26 + 65).toChar
     def tabula(a: Char, b: Char): Char = tabula(a, b.toInt - 65)
 
+    def shuffled(str: String) =
+        scala.util.Random.shuffle(str.toList).mkString
+
     def mixed(incl_num: Boolean) = 
-        scala.util.Random.shuffle(
-            (if (incl_num) "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" else "ABCDEFGHIKLMNOPQRSTUVWXYZ")
-            .toList).mkString
+        shuffled(if (incl_num) "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" else "ABCDEFGHIKLMNOPQRSTUVWXYZ")
  
     val everyTwoCharacters = "(?<=\\G.{2})"
 }
