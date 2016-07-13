@@ -1,7 +1,7 @@
 package crypto.classical;
 
 import crypto.Cipher;
-import crypto.utils.Polybius;
+import crypto.utils.{Polybius, mixed};
 
 class Nihilist(key: String) extends Cipher {
     private val sq = new Polybius(5, mixed(false))

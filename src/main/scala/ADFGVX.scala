@@ -1,7 +1,7 @@
 package crypto.classical;
 
 import crypto.Cipher;
-import crypto.utils.Polybius;
+import crypto.utils.{Polybius, mixed};
 
 class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
     private val sq = new Polybius(if (adfgx) 5 else 6, mixed(!adfgx))

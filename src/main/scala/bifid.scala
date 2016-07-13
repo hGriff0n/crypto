@@ -1,7 +1,7 @@
 package crypto.classical;
 
 import crypto.Cipher;
-import crypto.utils.Polybius;
+import crypto.utils.{Polybius, mixed};
 
 // TODO: Think of changing period to an option
 class Bifid(period: Int) extends Cipher {
