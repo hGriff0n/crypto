@@ -10,6 +10,7 @@ euclid
 mod inverse
 tabula recta
 polybius
+checkerboard
 
 ## Implemented Ciphers
 Caesar
@@ -22,13 +23,12 @@ Bifid
 Nihilist
 ADFGVX
 ADFGX           = ADFGVX(_, false)
+Two-square
+Four-square
 
 ## Implementing
 Trifid
 VIC Cipher
-Two-square
-Four-square
-Util.Checkerboard
 
 ## Unimplemented Ciphers
 Autokey

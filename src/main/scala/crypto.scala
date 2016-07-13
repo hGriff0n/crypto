@@ -6,18 +6,15 @@ import utils._;
 
 object demo {
     def main(args: Array[String]): Unit = {
-        val board = new Checkerboard
-
-        val o = board.translate('O')
-        println(o)
-        println(board.translate(o))
-
-        val (row, col) = board.translate('M')
-        println(s"($row,$col)")
-        println(board.translate(row, col))
-
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
         // Trifid: Treaty ends Boer War. => MUAFN.EQRKREUTXQBW
+
+        val cipher = new Trifid
+        val msg = cipher.encrypt("Treaty ends Boer War.")
+
+        println(msg)
+        println(msg == "MUAFN.EQRKREUTXQBW")
+        println(cipher.decrypt(msg))
     }
 }
 
