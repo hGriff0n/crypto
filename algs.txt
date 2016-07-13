@@ -25,9 +25,9 @@ ADFGVX
 ADFGX           = ADFGVX(_, false)
 Two-square
 Four-square
+Trifid
 
 ## Implementing
-Trifid
 VIC Cipher
 
 ## Unimplemented Ciphers

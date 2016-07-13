@@ -13,7 +13,7 @@ object demo {
         val msg = cipher.encrypt("Treaty ends Boer War.")
 
         println(msg)
-        println(msg == "MUAFN.EQRKREUTXQBW")
+        println(msg == "MUAFN.EQRKREUTXQBW")        // This won't give true cause I'm shuffling the alphabet
         println(cipher.decrypt(msg))
     }
 }
