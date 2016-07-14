@@ -26,13 +26,11 @@ ADFGX           = ADFGVX(_, false)
 Two-square
 Four-square
 Trifid
+Autokey
 
 ## Implementing
-Can I make utils.columnTranspose generic on the Container type?
 VIC Cipher
-Autokey
 Chaocipher
-Great
 Hill
 
 ## Unimplemented Ciphers
@@ -59,7 +57,6 @@ Straddling checkerboard
 Transposition
 Trithemius
 Vigenere
-VIC
 Grille
 A5/1
 A5/2
@@ -152,3 +149,4 @@ xtr
 
 ## Possible Options (Not really ciphers, but I can see a place)
 Tap Code
+Cipher parser generator

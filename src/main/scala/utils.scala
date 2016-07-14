@@ -28,6 +28,8 @@ package object utils {
 
     def tabula(c: Char, sh: Int) = ((c.toInt - 39 + sh) % 26 + 65).toChar
     def tabula(a: Char, b: Char): Char = tabula(a, b.toInt - 65)
+    def tabulaSub(c: Char, sh: Int): Char = tabula(c, -sh)
+    def tabulaSub(a: Char, b: Char): Char = tabulaSub(a, b.toInt - 65)
 
     def shuffled(str: String) =
         scala.util.Random.shuffle(str.toList).mkString

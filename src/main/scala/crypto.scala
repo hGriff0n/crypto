@@ -9,8 +9,8 @@ object demo {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
         // Trifid: Treaty ends Boer War. => MUAFN.EQRKREUTXQBW
 
-        val cipher = new Trifid
-        val msg = cipher.encrypt("Treaty ends Boer War.")
+        val cipher = new Autokey("QUEENLY")
+        val msg = cipher.encrypt("ATTACK AT ONCE")
 
         println(msg)
         println(msg == "MUAFN.EQRKREUTXQBW")        // This won't give true cause I'm shuffling the alphabet
