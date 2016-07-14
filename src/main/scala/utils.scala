@@ -35,7 +35,8 @@ package object utils {
     def mixed(incl_num: Boolean) = 
         shuffled(if (incl_num) "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" else "ABCDEFGHIKLMNOPQRSTUVWXYZ")
 
-    def columnTranspose[A](msg: List[A], num_col: Int) =
+    // This has a feature warning but I don't know what
+    def columnTranspose[A, C[A] <: Seq[A]](msg: C[A], num_col: Int) =
         msg.zipWithIndex                                                // Add the indices to the list
             .map(a => (a._1, a._2 % num_col))                           // So that I can group them into the columns
             .sortWith((a, b) => a._2 < b._2)                            // Sort the list so that items in the same column are next to each other

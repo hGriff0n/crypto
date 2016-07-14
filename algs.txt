@@ -30,12 +30,12 @@ Trifid
 ## Implementing
 Can I make utils.columnTranspose generic on the Container type?
 VIC Cipher
-
-## Unimplemented Ciphers
 Autokey
 Chaocipher
 Great
 Hill
+
+## Unimplemented Ciphers
 Keyword
 Running Key
 Rail fence
