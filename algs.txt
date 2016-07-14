@@ -28,6 +28,7 @@ Four-square
 Trifid
 
 ## Implementing
+Can I make utils.columnTranspose generic on the Container type?
 VIC Cipher
 
 ## Unimplemented Ciphers

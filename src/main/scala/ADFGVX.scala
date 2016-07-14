@@ -1,20 +1,13 @@
 package crypto.classical;
 
 import crypto.Cipher;
-import crypto.utils.{Polybius, mixed};
+import crypto.utils.{Polybius, mixed, columnTranspose};
 
 class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
     private val sq = new Polybius(if (adfgx) 5 else 6, mixed(!adfgx))
 
     private val encKey = key.zipWithIndex.sortWith((a, b) => a._1 < b._1).map(_._2).toList
     private val decKey = encKey.zipWithIndex.sortWith((a, b) => a._1 < b._1).map(_._2).toList
-
-    private def columnTranspose(msg: List[Char], num_col: Int) =
-        msg.zipWithIndex                                                // Add the indices to the list
-            .map(a => (a._1, a._2 % num_col))                           // So that I can group them into the columns
-            .sortWith((a, b) => a._2 < b._2)                            // Sort the list so that items in the same column are next to each other
-            .map(_._1)                                                  // Remove the indices from the list
-            .grouped(math.ceil(msg.length / num_col.toFloat).toInt)	    // And then group by column
 
     def this(key: String) = this(key, false)
 
