@@ -3,18 +3,21 @@ package crypto
 
 import classical._;
 import utils._;
+import breeze.linalg._;
 
 object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
-        // Trifid: Treaty ends Boer War. => MUAFN.EQRKREUTXQBW
 
-        val cipher = new Autokey("QUEENLY")
-        val msg = cipher.encrypt("ATTACK AT ONCE")
+        val mat = DenseMatrix((6, 24, 1), (13, 16, 10), (20, 17, 15))
+
+        val cipher = new Hill(mat)
+        val msg = cipher.encrypt("ACT")
 
         println(msg)
-        println(msg == "MUAFN.EQRKREUTXQBW")        // This won't give true cause I'm shuffling the alphabet
+        println(msg == "POH")
         println(cipher.decrypt(msg))
+        //println(Hill.stringify(t))
     }
 }
 
