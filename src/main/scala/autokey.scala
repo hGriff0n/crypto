@@ -19,9 +19,11 @@ class Autokey(key: String) extends Cipher {
     def decrypt(msg: String) = {
         var prod = Vector(key)
 
-        // Repeatedly apply a reverse translate on prod.top
+        // To decrypt, you need to incrementally figure out the encryption key
+            // The first part of the encryption key is the cipher key
+            // Unapply that key to the first part of the message to get the next part
+            // Combine the keys created from deciphering the message to get the plaintext
         for (group <- msg.grouped(key.length))
-            // Decrypt the group using the decrypt key (reverseTabula)
             prod = prod :+ (for (p <- group.zip(prod.last)) yield tabulaSub(p._1, p._2)).mkString
 
         prod.tail.mkString

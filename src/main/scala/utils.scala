@@ -1,6 +1,7 @@
 package crypto
 
 import scala.annotation.tailrec;
+import breeze.linalg._;
 
 // Package object allows "free functions" to be used int library by importing crypto.utils._
 package object utils {
@@ -20,8 +21,9 @@ package object utils {
         else       (a, inv, co == 1)
     }
     
+    // TODO: modInv(441, 26) => None (Should give Some(25))
     def modInv(a: Int, m: Int): Option[Int] = {
-        val (_, inv, coprime) = euclid(a, m)
+        val (t, inv, coprime) = euclid(a, m)
         if (coprime) Some((inv + m) % m)
         else         None
     }
@@ -31,11 +33,9 @@ package object utils {
     def tabulaSub(c: Char, sh: Int): Char = tabula(c, -sh)
     def tabulaSub(a: Char, b: Char): Char = tabulaSub(a, b.toInt - 65)
 
-    def shuffled(str: String) =
-        scala.util.Random.shuffle(str.toList).mkString
+    def shuffled(str: String) = scala.util.Random.shuffle(str.toList).mkString
+    def mixed(incl_num: Boolean) = shuffled(if (incl_num) "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" else "ABCDEFGHIKLMNOPQRSTUVWXYZ")
 
-    def mixed(incl_num: Boolean) = 
-        shuffled(if (incl_num) "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" else "ABCDEFGHIKLMNOPQRSTUVWXYZ")
 
     // This has a feature warning but I don't know what
     def columnTranspose[A, C[A] <: Seq[A]](msg: C[A], num_col: Int) =
@@ -44,6 +44,16 @@ package object utils {
             .sortWith((a, b) => a._2 < b._2)                            // Sort the list so that items in the same column are next to each other
             .map(_._1)                                                  // Remove the indices from the list
             .grouped(math.ceil(msg.length / num_col.toFloat).toInt)	    // And then group by column
- 
+
+    // TODO: Change to a better implementation (http://stackoverflow.com/questions/4287721/easiest-way-to-perform-modular-matrix-inversion-with-python)
+        // The current solution may have rounding issues
+    def modInv(mat: DenseMatrix[Int], m: Int): DenseMatrix[Int] = {
+        val d = det(mat)
+        val dinv = modInv(d.toInt % 26, 26).get     // For some reason modInv doesn't work if a > b
+        inv(mat)
+            .map(x => math.round(x * d).toInt * dinv)
+            .map(x => ((x % 26) + 26) % 26)
+    }
+
     val everyTwoCharacters = "(?<=\\G.{2})"
 }
