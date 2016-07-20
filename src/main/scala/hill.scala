@@ -24,7 +24,7 @@ object Hill {
     protected def stringify(vec: DenseVector[Int]) = vec.map(i => ((i % 26) + 65).toChar).toScalaVector
 
     protected def split(str: String, n: Int): Iterator[DenseVector[Int]] = str.length match {
-        case l if (l % n != 0) => split(str + ("X" * (l % n)), n)
+        case l if (l % n != 0) => split(str + ("X" * (n - l % n)), n)
         case l => str.grouped(n).map(makeVector(_))
     }
 
