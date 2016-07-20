@@ -13,16 +13,17 @@ object Hill {
         DenseMatrix.zeros[Int](n, n)
     }
 
-    // Turn a string into the given matrix (see wikipedia for Hill cipher for desired semantics)
-    protected def makeMatrix(str: String, n: Int) = {
-        DenseMatrix.zeros[Int](n, n)
-    }
+    // Turn a string into a matrix for the Hill cipher
+    protected def makeMatrix(str: String, n: Int) =
+        (new DenseMatrix(n, n, str.map(c => (c - 65) % 26).toArray)).t
 
+    // Convert the string to it's vector representation
     protected def makeVector(str: String) = DenseVector(str.map(c => (c - 65) % 26).toArray)
 
     // Converts the DenseVector (mod 26) to a vector of the mapped characters
     protected def stringify(vec: DenseVector[Int]) = vec.map(i => ((i % 26) + 65).toChar).toScalaVector
 
+    // Group the string into encryption blocks
     protected def split(str: String, n: Int): Iterator[DenseVector[Int]] = str.length match {
         case l if (l % n != 0) => split(str + ("X" * (n - l % n)), n)
         case l => str.grouped(n).map(makeVector(_))
