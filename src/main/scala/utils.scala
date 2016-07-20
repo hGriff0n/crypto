@@ -48,11 +48,14 @@ package object utils {
     // TODO: Change to a better implementation (http://stackoverflow.com/questions/4287721/easiest-way-to-perform-modular-matrix-inversion-with-python)
         // The current solution may have rounding issues
     def modInv(mat: DenseMatrix[Int], m: Int): DenseMatrix[Int] = {
-        val d = det(mat)
-        val dinv = modInv(d.toInt % 26, 26).get     // For some reason modInv doesn't work if a > b
+        val d = det(mat).toInt
+        val dinv = modInv(d % 26, 26).get     // For some reason modInv doesn't work if a > b
+
         inv(mat)
-            .map(x => math.round(x * d).toInt * dinv)
-            .map(x => ((x % 26) + 26) % 26)
+            .map(x => {
+                val t = math.round(x * d).toInt * dinv
+                ((t % 26) + 26) % 26
+            })
     }
 
     val everyTwoCharacters = "(?<=\\G.{2})"
