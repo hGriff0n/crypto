@@ -5,17 +5,9 @@ import crypto.utils.modInv;
 import breeze.linalg._;
 import breeze.numerics._;
 
-// TODO: Improve organization
-// TODO: Implement all behaviors
 object Hill {
-    // Makes an intertible n.n matrix
-    protected def makeInvertible(n: Int) = {
-        DenseMatrix.zeros[Int](n, n)
-    }
-
     // Turn a string into a matrix for the Hill cipher
-    protected def makeMatrix(str: String, n: Int) =
-        (new DenseMatrix(n, n, str.map(c => (c - 65) % 26).toArray)).t
+    protected def makeMatrix(str: String, n: Int) = (new DenseMatrix(n, n, str.map(c => (c - 65) % 26).toArray)).t
 
     // Convert the string to it's vector representation
     protected def makeVector(str: String) = DenseVector(str.map(c => (c - 65) % 26).toArray)
@@ -42,7 +34,6 @@ class Hill private (m: DenseMatrix[Int], n: Int) extends Cipher {
             // test data is in row-major order. I'm not sure yet which is the more usable option so I'm sticking with this
 
     def this(m: DenseMatrix[Int]) = this(m.t, m.rows)
-    def this(n: Int) = this(Hill.makeInvertible(n), n)
     def this(n: Int, key: String) = this(Hill.makeMatrix(key, n))
 
     // For some reason, I can't combine these into one function
