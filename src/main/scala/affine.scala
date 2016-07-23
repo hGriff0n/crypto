@@ -19,8 +19,8 @@ class Affine(a: Int, b: Int) extends Cipher {
         case c => c
     }
 
-    def encrypt(msg: String): String = for (c <- msg) yield encode(c, a, b)
-    def decrypt(msg: String): String = for (c <- msg) yield encode(c, inv, inv * -b % 26)
+    def encrypt(msg: String) = for (c <- msg) yield encode(c, a, b)
+    def decrypt(msg: String) = for (c <- msg) yield encode(c, inv, inv * -b % 26)
 }
 
 class Atbash extends Affine(25, 25)

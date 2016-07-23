@@ -9,8 +9,8 @@ object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
 
-        val cipher = new Hill(3, "GYBNQKURP")
-        val msg = cipher.encrypt("ACTA")
+        val cipher = new Trithemius
+        val msg = cipher.encrypt("Machine")
 
         println(msg)
         println(msg == "POH")
@@ -20,3 +20,4 @@ object demo {
 }
 
 // Note: Enter `sbt ~run` in the terminal to have scala run the project after saving a file
+    // Add "set offline := true" to avoid attempting to download from the internet
