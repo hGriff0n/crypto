@@ -28,50 +28,22 @@ Four-square
 Trifid
 Autokey
 Hill
+Dvorak
+Trithemius
 
 ## Implementing
 VIC Cipher
 Chaocipher
-Keyword
-    Substitution cipher using a word to generate the mapping
-    The cipherkey is created similar to Polybius square and then mapped to the alphabet
-Running Key
-    A piece of text from a large source is taken as the key
-    The beginning is indicated with a five character indicator block mixed into the ciphertext
-Rail fence
-    "Write" plaintext up and down diagonally (as if on a rail fence)
-    Read out the letters in rows to get ciphertext
-        W---E---C
-        -E-R-D-S-
-        --A---I--
-Alberti
-    Tabula that changes its shift after every few words
-    The shifting is done with an agreed upon characker (say k)
-    Each block of ciphertext (enciphered with the same shift)
-        is started with a single letter indicating the new shift (R -> tabula(k, R)
+Enigma
 
 ## Unimplemented Ciphers
-BATCO
-Slidex
-Beaufort
-Dvorak
-Enigma
-Kama Sutra
-Pigpen
-Polyalphabetic
-Rasterschluessel 44
-Reihnenschieber
-Reservehandverfahren
-Scytale
-Smithy code
-Solitaire
-Straddling checkerboard
-Transposition
-Trithemius
 Vigenere
-Grille
+Beaufort
+Keyword
+
 A5/1
 A5/2
+A5/3
 BMGL
 Chameleon
 Fish
@@ -163,6 +135,19 @@ Gromark
 Gronsfeld
 Evan-Mansour
 
-## Possible Options (Not really ciphers, but I can see a place)
+## Possible Options
 Tap Code
 Cipher parser generator
+Scytale
+Running Key
+Rail fence
+Smithy code
+Transposition
+Grille
+Solitaire
+Alberti
+Pigpen
+BATCO
+Slidex
+Kama Sutra
+Rasterschluessel 44
