@@ -9,7 +9,7 @@ object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
 
-        val cipher = new Trithemius
+        val cipher = new Dvorak
         val msg = cipher.encrypt("Machine")
 
         println(msg)
