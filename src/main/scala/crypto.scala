@@ -15,7 +15,6 @@ object demo {
         println(msg)
         println(msg == "LXFOPVEFRNHR")
         println(cipher.decrypt(msg))
-        //println(Hill.stringify(t))
     }
 }
 

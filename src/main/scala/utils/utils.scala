@@ -1,4 +1,4 @@
-package crypto
+package crypto;
 
 import scala.annotation.tailrec;
 import breeze.linalg._;
