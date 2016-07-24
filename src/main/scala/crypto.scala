@@ -9,8 +9,8 @@ object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
 
-        val cipher = new Vigenere("LEMON")
-        val msg = cipher.encrypt("Attack at dawn")
+        val cipher = new Beaufort("FORTIFICATION")
+        val msg = cipher.encrypt("Defend the east wall of the castle")
 
         println(msg)
         println(msg == "LXFOPVEFRNHR")
