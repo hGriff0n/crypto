@@ -32,15 +32,15 @@ Dvorak
 Trithemius
 Vigenere
 Beaufort
+Keyword
 
 ## Implementing
 VIC Cipher
 Chaocipher
 Enigma
 
+-- Most of these are modern ciphers, need to improve organization first
 ## Unimplemented Ciphers
-Keyword
-
 A5/1
 A5/2
 A5/3

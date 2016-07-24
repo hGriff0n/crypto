@@ -10,3 +10,7 @@ class Substitution(from: String, to: String) extends Cipher {
 
 class Dvorak extends Substitution(dvorak, qwerty)
 class Qwerty extends Substitution(qwerty, dvorak)
+
+class Keyword(key: String) extends Substitution("ABCDEFGHIJKLMNOPQRSTUVWXYZ", key + (key diff "ABCDEFGHIJKLMNOPQRSTUVWXYZ")) {
+    override def encrypt(msg: String) = super.encrypt(msg.toUpperCase.replaceAll(" ", ""))
+} 
