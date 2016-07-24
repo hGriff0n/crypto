@@ -35,6 +35,4 @@ class Vigenere(key: String) extends Cipher {
 class Beaufort(key: String) extends Cipher {
     def encrypt(msg: String) = 
         (for ((c, i) <- msg.toUpperCase.replaceAll(" ", "").zipWithIndex) yield (tabulaSub(key(i % key.length), c), i)).map(_._1).mkString
-
-    def decrypt(msg: String) = encrypt(msg)
 }

@@ -5,10 +5,9 @@ trait Cipher {
     protected val uc = 'A' to 'Z'
 
     def encrypt(msg: String): String
-    def decrypt(msg: String): String
+    def decrypt(msg: String): String = encrypt(msg)
 }
 
 class Iden extends Cipher {
     def encrypt(msg: String) = msg
-    def decrypt(msg: String) = msg
 }
