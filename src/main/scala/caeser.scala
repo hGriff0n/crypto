@@ -23,3 +23,11 @@ class Trithemius extends Cipher {
     def decrypt(msg: String) = 
         (for ((c, i) <- msg.zipWithIndex) yield (tabulaSub(c, i % 26), i)).map(_._1).mkString
 }
+
+class Vigenere(key: String) extends Cipher {
+    def encrypt(msg: String) =
+        (for ((c, i) <- msg.toUpperCase.replaceAll(" ", "").zipWithIndex) yield (tabula(c, key(i % key.length)), i)).map(_._1).mkString
+
+    def decrypt(msg: String) =
+        (for ((c, i) <- msg.zipWithIndex) yield (tabulaSub(c, key(i % key.length)), i)).map(_._1).mkString
+}

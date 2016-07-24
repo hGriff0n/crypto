@@ -30,6 +30,7 @@ Autokey
 Hill
 Dvorak
 Trithemius
+Vigenere
 
 ## Implementing
 VIC Cipher
@@ -37,7 +38,6 @@ Chaocipher
 Enigma
 
 ## Unimplemented Ciphers
-Vigenere
 Beaufort
 Keyword
 

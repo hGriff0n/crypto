@@ -9,11 +9,11 @@ object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
 
-        val cipher = new Dvorak
-        val msg = cipher.encrypt("Machine")
+        val cipher = new Vigenere("LEMON")
+        val msg = cipher.encrypt("Attack at dawn")
 
         println(msg)
-        println(msg == "POH")
+        println(msg == "LXFOPVEFRNHR")
         println(cipher.decrypt(msg))
         //println(Hill.stringify(t))
     }
