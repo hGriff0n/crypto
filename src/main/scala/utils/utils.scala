@@ -58,6 +58,27 @@ package object utils {
             })
     }
 
+    // Perform chain addition (lagged fibonacci generation) to generate a List of size n
+    // TODO: Genericize (Need to find a way to limit based on addability)
+    def chainAdd(d: List[Int], n: Int)(implicit mod: Boolean): List[Int] = {
+        val ret = d ++ (d.sliding(2).map(if (mod) _.sum % 10 else _.sum).toList)
+
+        if (ret.size < n) chainAdd(ret, n) else ret.slice(0, n)
+    }
+    def chainAdd(d: List[Char], n: Int)(implicit mod: Boolean, t: DummyImplicit): List[Int] = chainAdd(d.map(_.toInt - 65), n)(mod)
+    def chainAdd(d: String, n: Int)(implicit mod: Boolean): List[Int] = chainAdd(d.toUpperCase.toList.map(_.toInt - 65), n)(mod)
+
+    implicit val mod = true
+
+    // Transform d into a List of [0..N) representing their position in an ordered list
+    def sequentialize[T <% Ordered[T]](d: List[T]) =
+        d.zipWithIndex                      // Retain the original positions
+         .sortWith((a, b) => a._1 < b._1)   // Sort in ascending order
+         .map(_._2)                         // Remove the old information
+         .zipWithIndex                      // Add in the sorted positioning
+         .sortWith((a, b) => a._1 < b._1)   // Get the data back in the original order
+         .map(_._2)                         // Remove the original position indices
+
     val everyTwoCharacters = "(?<=\\G.{2})"
     val dvorak = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?"
     val qwerty = "`1234567890[]',.pyfgcrl/=\\aoeuidhtns-;qjkxbmwvz~!@#$%^&*(){}\"<>PYFGCRL?+|AOEUIDHTNS_:QJKXBMWVZ"

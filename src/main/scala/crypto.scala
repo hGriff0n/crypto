@@ -15,6 +15,14 @@ object demo {
         println(msg)
         println(msg == "LXFOPVEFRNHR")
         println(cipher.decrypt(msg))
+
+        val tst: List[Int] = List(7, 4, 3, 6)
+        val res = chainAdd(tst, 6)
+        println(res)            // 7, 4, 3, 6, 1, 7
+
+        val ret = sequentialize(tst)
+        println(ret)            // 3, 1, 0, 2
+
     }
 }
 
