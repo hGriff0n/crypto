@@ -11,7 +11,7 @@ class Bifid(period: Int) extends Cipher {
     def this() = this(0)
 
     // Note: This method removes spaces from the passed message
-    def encrypt(msg: String) = {
+    override def encrypt(msg: String) = {
         val groups = (for (c <- msg.replaceAll(" ",""))
             yield sq.translate(c))
                 .grouped(if (period == 0) msg.length else period)
@@ -24,7 +24,7 @@ class Bifid(period: Int) extends Cipher {
         res.mkString
     }
 
-    def decrypt(msg: String) = {
+    override def decrypt(msg: String) = {
         val p_length = if (period == 0) msg.length else period
         val groups = (for (c <- msg)
             yield sq.translate(c))

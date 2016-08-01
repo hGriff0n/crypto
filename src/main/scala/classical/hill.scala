@@ -37,6 +37,6 @@ class Hill private (m: DenseMatrix[Int], n: Int) extends Cipher {
     def this(n: Int, key: String) = this(Hill.makeMatrix(key, n))
 
     // For some reason, I can't combine these into one function
-    def encrypt(msg: String) = Hill.split(msg.toUpperCase.replaceAll(" ", ""), n).flatMap(v => Hill.stringify(m.t * v)).mkString
-    def decrypt(msg: String) = Hill.split(msg, n).flatMap(v => Hill.stringify(inv.t * v)).mkString
+    override def encrypt(msg: String) = Hill.split(msg.toUpperCase.replaceAll(" ", ""), n).flatMap(v => Hill.stringify(m.t * v)).mkString
+    override def decrypt(msg: String) = Hill.split(msg, n).flatMap(v => Hill.stringify(inv.t * v)).mkString
 }

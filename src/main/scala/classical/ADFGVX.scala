@@ -11,7 +11,7 @@ class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
 
     def this(key: String) = this(key, false)
 
-    def encrypt(msg: String) = {
+    override def encrypt(msg: String) = {
         // Translate the message into it's flattened polybius coordinates
         val coords = (for (c <- msg.toUpperCase.replaceAll(" ", "")) yield sq.translate(c)).toList
             .flatMap(t => List(t._1, t._2))         // Flatten the resulting tuples
@@ -31,7 +31,7 @@ class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
         encKey.map(cols(_).mkString).mkString
     }
 
-    def decrypt(msg: String) = {
+    override def decrypt(msg: String) = {
         val num_over = msg.length % key.length
         val num_take = msg.length / key.length.toFloat
         val max = math.ceil(num_take).toInt

@@ -26,6 +26,6 @@ class Trifid extends Cipher {
             ).mkString
     }
 
-    def encrypt(msg: String) = translate(msg, 3)
-    def decrypt(msg: String) = translate(msg, msg.length)
+    override def encrypt(msg: String) = translate(msg, 3)
+    override def decrypt(msg: String) = translate(msg, msg.length)
 }

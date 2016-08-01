@@ -11,12 +11,12 @@ class Autokey(key: String) extends Cipher {
     def genKey(msg: String) = 
         (key + msg).substring(0, msg.length)
 
-    def encrypt(msg: String) = {
+    override def encrypt(msg: String) = {
         val m = msg.replaceAll(" ", "").toUpperCase
         (for (p <- genKey(m).zip(m)) yield tabula(p._1, p._2)).mkString
     }
 
-    def decrypt(msg: String) = {
+    override def decrypt(msg: String) = {
         var prod = Vector(key)
 
         // To decrypt, you need to incrementally figure out the encryption key

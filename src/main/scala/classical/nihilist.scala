@@ -11,7 +11,7 @@ class Nihilist(key: String) extends Cipher {
             t * 10 + o
         }).toList
 
-    def encrypt(msg: String) = {
+    override def encrypt(msg: String) = {
         var iter = 0
         msg.toUpperCase.replaceAll(" ", "")
             .map(c => {
@@ -22,7 +22,7 @@ class Nihilist(key: String) extends Cipher {
             }).mkString(" ")
     }
     
-    def decrypt(msg: String) = {
+    override def decrypt(msg: String) = {
         var iter = 0
         msg.split(" ")
             .map(s => {
