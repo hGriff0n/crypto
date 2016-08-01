@@ -1,7 +1,7 @@
 package crypto;
 
 import scala.annotation.tailrec;
-import breeze.linalg._;
+import breeze.linalg.{det, inv, DenseMatrix};
 
 // Package object allows "free functions" to be used int library by importing crypto.utils._
 package object utils {
@@ -59,16 +59,18 @@ package object utils {
     }
 
     // Perform chain addition (lagged fibonacci generation) to generate a List of size n
-    // TODO: Genericize (Need to find a way to limit based on addability)
-    def chainAdd(d: List[Int], n: Int)(implicit mod: Boolean): List[Int] = {
-        val ret = d ++ (d.sliding(2).map(if (mod) _.sum % 10 else _.sum).toList)
+    def chainAdd(d: List[Int], n: Int, mod: Int = 10): List[Int] = {
+        val add = d.sliding(2).map(if (mod > 0) _.sum % mod else _.sum).toList
+        val ret = d ++ add
 
-        if (ret.size < n) chainAdd(ret, n) else ret.slice(0, n)
+        (if (ret.size < n) {
+            val orig = d.slice(0, (d.size - 1))
+            orig ++ chainAdd(List(d.last) ++ add, n - orig.size)
+        } else ret).slice(0, n)
     }
-    def chainAdd(d: List[Char], n: Int)(implicit mod: Boolean, t: DummyImplicit): List[Int] = chainAdd(d.map(_.toInt - 65), n)(mod)
-    def chainAdd(d: String, n: Int)(implicit mod: Boolean): List[Int] = chainAdd(d.toUpperCase.toList.map(_.toInt - 65), n)(mod)
+    def chainAdd(d: List[Char], n: Int): List[Int] = chainAdd(d.map(_.toInt - 65), n, 26)
+    def chainAdd(d: String, n: Int): List[Int] = chainAdd(d.toUpperCase.toList.map(_.toInt - 65), n, 26)
 
-    implicit val mod = true
 
     // Transform d into a List of [0..N) representing their position in an ordered list
     def sequentialize[T <% Ordered[T]](d: List[T]) =
@@ -78,6 +80,13 @@ package object utils {
          .zipWithIndex                      // Add in the sorted positioning
          .sortWith((a, b) => a._1 < b._1)   // Get the data back in the original order
          .map(_._2)                         // Remove the original position indices
+
+    // Split a number into its digits
+    def digits(i: Int): scala.collection.immutable.IndexedSeq[Int] = i.toString map(_.asDigit)
+    def digits(i: Int, n: Int): scala.collection.immutable.IndexedSeq[Int] = {
+        val res = digits(i)
+        Vector.fill(n - res.length)(0) ++ res
+    }
 
     val everyTwoCharacters = "(?<=\\G.{2})"
     val dvorak = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?"
