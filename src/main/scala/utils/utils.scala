@@ -60,12 +60,12 @@ package object utils {
 
     // Perform chain addition (lagged fibonacci generation) to generate a List of size n
     def chainAdd(d: List[Int], n: Int, mod: Int = 10): List[Int] = {
-        val add = d.sliding(2).map(if (mod > 0) _.sum % mod else _.sum).toList
+        val add = d.sliding(2).map(if (mod > 0) (_.sum % mod) else _.sum).toList
         val ret = d ++ add
 
         (if (ret.size < n) {
             val orig = d.slice(0, (d.size - 1))
-            orig ++ chainAdd(List(d.last) ++ add, n - orig.size)
+            orig ++ chainAdd(List(d.last) ++ add, n - orig.size, mod)
         } else ret).slice(0, n)
     }
     def chainAdd(d: List[Char], n: Int): List[Int] = chainAdd(d.map(_.toInt - 65), n, 26)
@@ -74,17 +74,16 @@ package object utils {
 
     // Transform d into a List of [0..N) representing their position in an ordered list
     def sequentialize[T <% Ordered[T]](d: List[T]) =
-        d.zipWithIndex                      // Retain the original positions
-         .sortWith((a, b) => a._1 < b._1)   // Sort in ascending order
-         .map(_._2)                         // Remove the old information
-         .zipWithIndex                      // Add in the sorted positioning
-         .sortWith((a, b) => a._1 < b._1)   // Get the data back in the original order
-         .map(_._2)                         // Remove the original position indices
+        d.zipWithIndex
+         .sortWith((a, b) => a._1 < b._1)         // Sort the given list but maintain the original positioning
+         .zipWithIndex                            // Add in the sequentialization
+         .sortWith((a, b) => a._1._2 < b._1._2)   // Return to the original ordering
+         .map(_._2 + 1)                           // Remove the original data
 
     // Split a number into its digits
-    def digits(i: Int): scala.collection.immutable.IndexedSeq[Int] = i.toString map(_.asDigit)
-    def digits(i: Int, n: Int): scala.collection.immutable.IndexedSeq[Int] = {
-        val res = digits(i)
+    def digits[T](i: T)(implicit num: Numeric[T]): scala.collection.immutable.IndexedSeq[Int] = i.toString map(_.asDigit)
+    def digits[T](i: T, n: Int)(implicit num: Numeric[T]): scala.collection.immutable.IndexedSeq[Int] = {
+        val res = digits(i)(num)
         Vector.fill(n - res.length)(0) ++ res
     }
 

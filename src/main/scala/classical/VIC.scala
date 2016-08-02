@@ -1,10 +1,9 @@
 package crypto.classical;
 
 import crypto.Cipher;
-import crypto.utils.Polybius;
+import crypto.utils.{sequentialize, chainAdd, digits, columnTranspose};
 // Procedure from http://everything2.com/user/raincomplex/writeups/VIC+cipher
 
-// TODO: Write down the rules for the second transposition
 // TODO: Figure out how to decrypt
 
 /**
@@ -76,7 +75,6 @@ Straddling Checkerboard
 /**
 Intermediate Keys:
     Given:
-        K => Short keyword
         S => Line from a song (min 20 characters)
         D => A date (formated as digits)
         N => A personal number (unique per agent)
@@ -86,9 +84,8 @@ Intermediate Keys:
         K2 => Key for Second Transposition
         C => Straddling Checkerboard header
     Procedure:
-        Split S in half and sequentialize each => (S1, S2)
-        Choose a random 5 digit number => MI
-        Subtract (no borrowing) the first five date digits from MI => G0
+        // TODO: Add back in the original procedure stuff
+        Subtract (no borrowing) the first five date digits of D from MI => G0
         Expand G0 through chain addition to 10 digits => G1
         Add G1 to S1 (no carrying) => G
         Map S2 to 1234567890 and replace G accordingly => T
@@ -99,10 +96,47 @@ Intermediate Keys:
         Sequentialize T => F
         Read off U columnwise according to F => W
             column 0 then column 1 etc..
-        Sequentialize the first FT digits => K1
-        Sequentialize the next ST digits => K2
+        Sequentialize the first FT digits of W => K1
+        Sequentialize the next ST digits of W => K2
         Sequentialize the last row of U => C
 */
+
+object VIC {
+    private val r = scala.util.Random
+
+    private def splitAt(s: String, i: Int) =
+        List(s.substring(0, i).toList, s.substring(i).toList)
+
+    private def halveString(s: String) = splitAt(s, s.length / 2)
+
+    def interKeys(song: String, d: Int, n: Int) = {
+        val s = halveString(song.replaceAll(" ", "").toUpperCase.substring(0, 20)).map(sequentialize(_))
+        
+        //val mi = r.nextInt(100000)             // Generate a 5 digit random number
+        val mi = 60115
+        val di = digits(d, 6)
+
+        val g0 = (digits(mi), di.slice(0, 5)).zipped map((a, b) => ((a + 10) - b) % 10)
+        val g = (chainAdd(g0.toList, 10), s(0)).zipped map((a, b) => (a + b) % 10)
+
+        val t = g.map(a => s(1)((a + 9) % 10))
+
+        val t1 = chainAdd(t, 60).slice(10, 60)
+        val dis = t1.reverse.distinct.slice(0, 2).map(_ + n)        // (ST, FT)
+
+        val u = columnTranspose(t1.map(a => if (a == 0) t1.size else a), 10).toList
+
+        val f = sequentialize(t).zipWithIndex
+                                .sortWith((a, b) => a._1 < b._1)
+                                .flatMap(a => u(a._2))
+
+        val k1 = sequentialize(f.slice(0, dis(1)))
+        val k2 = sequentialize(f.slice(dis(1), dis.sum))
+        val c = sequentialize(t1.reverse.take(10).reverse)
+
+        (mi, k1, k2, c)
+    }
+}
 
 class VIC extends Cipher {
     override def encrypt(msg: String) = msg

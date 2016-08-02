@@ -3,7 +3,9 @@ package crypto
 
 import classical._;
 import utils._;
-import breeze.linalg._;
+//import spire.algebra._;   // provides algebraic type classes
+//import spire.math._;      // provides functions, types, and type classes
+//import spire.implicits._; // provides infix operators, instances and conversions
 
 object demo {
     def main(args: Array[String]): Unit = {
@@ -16,13 +18,7 @@ object demo {
         println(msg == "LXFOPVEFRNHR")
         println(cipher.decrypt(msg))
 
-        val tst: List[Int] = List(7, 4, 3, 6)
-        val res = chainAdd(tst, 6)
-        println(res)            // 7, 4, 3, 6, 1, 7
-
-        val ret = sequentialize(tst)
-        println(ret)            // 3, 1, 0, 2
-
+        println(VIC.interKeys("all the people are dead but I'm gonna keep dancing", 391752, 15))
     }
 }
 
