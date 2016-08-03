@@ -18,7 +18,8 @@ object demo {
         println(msg == "LXFOPVEFRNHR")
         println(cipher.decrypt(msg))
 
-        println(VIC.interKeys("all the people are dead but I'm gonna keep dancing", 391752, 15))
+        val (mi, k1, k2, c) = VIC.interKeys("all the people are dead but I'm gonna keep dancing", 391752, 15)
+        println(VIC.checker("ASSIGNED OBJECTIVES INVALIDATED . REPORT IMMEDIATELY TO SAFE HOUSE . AWAIT EXTRACTION INSTRUCTIONS WITHIN WEEK", c))
     }
 }
 

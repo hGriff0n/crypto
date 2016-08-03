@@ -1,10 +1,53 @@
 package crypto.classical;
 
 import crypto.Cipher;
-import crypto.utils.{sequentialize, chainAdd, digits, columnTranspose};
+import crypto.utils.{sequentialize, chainAdd, digits, columnTranspose, Checkerboard};
 // Procedure from http://everything2.com/user/raincomplex/writeups/VIC+cipher
 
 // TODO: Figure out how to decrypt
+
+/**
+Straddling Checkerboard
+    Given:
+        P => A plaintext message
+    Produces:
+        C => A scrambled plaintext encoding
+    Procedure:
+        Create a straddling checkerboard => S
+        Split P at a random point => (P1, P2)
+        P2 + H (Message start) + P1 => P
+        Encode P using S/M => C0
+        Add nulls to C0 until size(C0) // 5 => C
+*/
+
+/**
+Intermediate Keys:
+    Given:
+        S => Line from a song (min 20 characters)
+        D => A date (formated as digits)
+        N => A personal number (unique per agent)
+    Produces:
+        MI => A random 5 digit identifier
+        K1 => Key for First Transposition
+        K2 => Key for Second Transposition
+        C => Straddling Checkerboard header
+    Procedure:
+        // TODO: Add back in the original procedure stuff
+        Subtract (no borrowing) the first five date digits of D from MI => G0
+        Expand G0 through chain addition to 10 digits => G1
+        Add G1 to S1 (no carrying) => G
+        Map S2 to 1234567890 and replace G accordingly => T
+        Expand T through chain addition to 50 digits => T1
+        Map T1 in 5 rows of 10 numbers => U
+        Take the last two unique digits of U => (U1, U2)
+        (U1 + N, U2 + N) => FT, ST
+        Sequentialize T => F
+        Read off U columnwise according to F => W
+            column 0 then column 1 etc..
+        Sequentialize the first FT digits of W => K1
+        Sequentialize the next ST digits of W => K2
+        Sequentialize the last row of U => C
+*/
 
 /**
 Final Production:
@@ -57,57 +100,18 @@ First Transposition:
             Column mapped to '1' in K1 is read first, etc..
 */
 
-/**
-Straddling Checkerboard
-    Given:
-        M => A mapping for column headers
-        P => A plaintext message
-    Produces:
-        C => A scrambled plaintext encoding
-    Procedure:
-        Create a straddling checkerboard => S
-        Split P at a random point => (P1, P2)
-        P2 + H (Message start) + P1 => P
-        Encode P using S/M => C0
-        Add nulls to C0 until size(C0) // 5 => C
-*/
-
-/**
-Intermediate Keys:
-    Given:
-        S => Line from a song (min 20 characters)
-        D => A date (formated as digits)
-        N => A personal number (unique per agent)
-    Produces:
-        MI => A random 5 digit identifier
-        K1 => Key for First Transposition
-        K2 => Key for Second Transposition
-        C => Straddling Checkerboard header
-    Procedure:
-        // TODO: Add back in the original procedure stuff
-        Subtract (no borrowing) the first five date digits of D from MI => G0
-        Expand G0 through chain addition to 10 digits => G1
-        Add G1 to S1 (no carrying) => G
-        Map S2 to 1234567890 and replace G accordingly => T
-        Expand T through chain addition to 50 digits => T1
-        Map T1 in 5 rows of 10 numbers => U
-        Take the last two unique digits of U => (U1, U2)
-        (U1 + N, U2 + N) => FT, ST
-        Sequentialize T => F
-        Read off U columnwise according to F => W
-            column 0 then column 1 etc..
-        Sequentialize the first FT digits of W => K1
-        Sequentialize the next ST digits of W => K2
-        Sequentialize the last row of U => C
-*/
-
 object VIC {
     private val r = scala.util.Random
+    private val strt = "XYZ"
 
     private def splitAt(s: String, i: Int) =
         List(s.substring(0, i).toList, s.substring(i).toList)
 
     private def halveString(s: String) = splitAt(s, s.length / 2)
+
+    def firstTranspose(k1: List[Int], p: List[Int]) = {
+        // How did I do this in ADFGVX ???
+    }
 
     def interKeys(song: String, d: Int, n: Int) = {
         val s = halveString(song.replaceAll(" ", "").toUpperCase.substring(0, 20)).map(sequentialize(_))
@@ -135,6 +139,21 @@ object VIC {
         val c = sequentialize(t1.reverse.take(10).reverse)
 
         (mi, k1, k2, c)
+    }
+
+    def checker(msg: String, c: List[Int]) = {
+        def adapt(p: (Int, Int)) = (if (p._1 == -1) -1 else c(p._1), c(p._2))
+
+        //val board = new Checkerboard
+        val board = new Checkerboard("ASINTOER  BDGJLPUWY.CFHKMQVXZ#")
+
+        val s = splitAt(msg.replaceAll(" ", ""), 14)//, r.nextInt(msg.size))
+        val p = s(1).mkString + strt + s(0).mkString
+
+        val numNulls = (5 - (p.length % 5)) % 5
+
+        (p + "X" * numNulls).map(c => adapt(board.translate(c)))
+            .flatMap(p => if (p._1 == -1) List(p._2) else List(p._1, p._2)).toList
     }
 }
 
