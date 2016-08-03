@@ -11,14 +11,14 @@ object Checkerboard {}
 // Translation: Letter is replaced by {row}{col}, with row = "" for letters in the first row (I'm using -1 for row)
 // There's another thing about encipher the translated text through transposition/substition, but that can be applied afterwards
 
-class Checkerboard extends Translator {
+class Checkerboard(key: String) extends Translator {
     private val square = Array.ofDim[Char](3, 10)
     private var rows = Vector(-1)
     
     init()
 
     private def init() = {
-        val rowstr = (shuffled("AEINORST  ") + shuffled("BCDFGHJKLMPQUVWXYZ./")).iterator
+        val rowstr = key.iterator
 
         for ((row, i) <- square.iterator.zipWithIndex; (col, j) <- row.iterator.zipWithIndex) {
             square(i)(j) = rowstr.next
@@ -36,4 +36,6 @@ class Checkerboard extends Translator {
     }
 
     def translate(row: Int, col: Int) = square(rows.indexOf(row))(col)
+    
+    def this() = this(shuffled("AEINORST  ") + shuffled("BCDFGHJKLMPQUVWXYZ./"))
 }
