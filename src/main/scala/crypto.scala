@@ -16,7 +16,7 @@ object demo {
         val c1 = VIC.firstTranspose(k1, c0)
         val c2 = VIC.secondTranspose(k2, c1)
         val ct = VIC.finalize(mi, 391752, c2)
-        println(c2)
+        println(ct)
     }
 }
 

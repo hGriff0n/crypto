@@ -4,7 +4,47 @@ import crypto.Cipher;
 import crypto.utils.{sequentialize, chainAdd, digits, columnTranspose, Checkerboard};
 // Procedure from http://everything2.com/user/raincomplex/writeups/VIC+cipher
 
+// TODO: Improve encrypt implementation
+// TODO: Improve organization
 // TODO: Figure out how to decrypt
+
+/**
+Final Production:
+    Given:
+        MI => 5 choosen digits produced for the Intermediate Keys
+        D => Date represented as a digit
+        P => Enciphered text produced by the second transposition
+    Produces:
+        C => Final ciphertext
+    Procedure:
+        Split P into groups of 5 digits => G
+        Insert MI into G last(D) groups from the end => C
+            last(D) == 1 => MI is the last group of C
+*/
+
+/**
+Second Transposition:
+    Given:
+        K2 => Key produced from Intermediate Key step
+        P => Plaintext encoded from the first transpostion
+    Produces:
+        C => Reordered plaintext
+    Procedure:
+        let size(P) / size(K2) => H
+            size(P) % size(K2) => L
+            indexof(1 to size(K2), K2) => I
+            next(I) - 1 => R
+        Construct a table, dim[size(K2), H] => T
+        For N from 0 to H - 2
+            if R == size(K2)
+                let next(I) - 1 => R
+            take next R characters of P => K
+            fill the first R spots of T[N] with K => T
+        Fill the first L spots of T[H - 1] with the next L characters of P => T
+        Fill the open spots of T with the remaining characters of P => T
+        Read T column wise in the order from K2 => C
+            Column mapped to '1' in K1 is read first, etc..
+*/
 
 /**
 First Transposition:
@@ -62,44 +102,6 @@ Intermediate Keys:
         Sequentialize the last row of U => C
 */
 
-/**
-Final Production:
-    Given:
-        MI => 5 choosen digits produced for the Intermediate Keys
-        D => Date represented as a digit
-        P => Enciphered text produced by the second transposition
-    Produces:
-        C => Final ciphertext
-    Procedure:
-        Split P into groups of 5 digits => G
-        Insert MI into G last(D) groups from the end => C
-            last(D) == 1 => MI is the last group of C
-*/
-
-/**
-Second Transposition:
-    Given:
-        K2 => Key produced from Intermediate Key step
-        P => Plaintext encoded from the first transpostion
-    Produces:
-        C => Reordered plaintext
-    Procedure:
-        let size(P) / size(K2) => H
-            size(P) % size(K2) => L
-            indexof(1 to size(K2), K2) => I
-            next(I) - 1 => R
-        Construct a table, dim[size(K2), H] => T
-        For N from 0 to H - 2
-            if R == size(K2)
-                let next(I) - 1 => R
-            take next R characters of P => K
-            fill the first R spots of T[N] with K => T
-        Fill the first L spots of T[H - 1] with the next L characters of P => T
-        Fill the open spots of T with the remaining characters of P => T
-        Read T column wise in the order from K2 => C
-            Column mapped to '1' in K1 is read first, etc..
-*/
-
 object VIC {
     private val r = scala.util.Random
     private val strt = "XYZ"
@@ -110,7 +112,9 @@ object VIC {
     private def halveString(s: String) = splitAt(s, s.length / 2)
 
     def finalize(mi: Int, d: Int, p: List[Int]) = {
-
+        val g = p.grouped(5).toList
+        val c = g.size - digits(d).last + 1
+        g.take(c) ++ List(digits(mi).toList) ++ g.drop(c)
     }
 
     // Add protection against exhausting the key before the message
