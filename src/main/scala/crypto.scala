@@ -11,15 +11,11 @@ object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
 
-        val cipher = new Beaufort("FORTIFICATION")
-        val msg = cipher.encrypt("Defend the east wall of the castle")
-
-        println(msg)
-        println(msg == "LXFOPVEFRNHR")
-        println(cipher.decrypt(msg))
-
         val (mi, k1, k2, c) = VIC.interKeys("all the people are dead but I'm gonna keep dancing", 391752, 15)
-        println(VIC.checker("ASSIGNED OBJECTIVES INVALIDATED . REPORT IMMEDIATELY TO SAFE HOUSE . AWAIT EXTRACTION INSTRUCTIONS WITHIN WEEK", c))
+        val c0 = VIC.checker("ASSIGNED OBJECTIVES INVALIDATED . REPORT IMMEDIATELY TO SAFE HOUSE . AWAIT EXTRACTION INSTRUCTIONS WITHIN WEEK", c)
+        val c1 = VIC.firstTranspose(k1, c0)
+        val c2 = VIC.secondTranspose(k2, c1)
+        println(c2)
     }
 }
 

@@ -39,6 +39,9 @@ VIC Cipher
 Chaocipher
 Enigma
 
+## TODO
+Double check the behavior of utils.columnTranspose
+
 -- Most of these are modern ciphers, need to improve organization first
 ## Unimplemented Ciphers
 A5/1

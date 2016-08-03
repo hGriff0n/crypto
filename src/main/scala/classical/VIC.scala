@@ -7,6 +7,19 @@ import crypto.utils.{sequentialize, chainAdd, digits, columnTranspose, Checkerbo
 // TODO: Figure out how to decrypt
 
 /**
+First Transposition:
+    Given:
+        K1 => Key produced from Intermediate Key step
+        P => Plaintext encoded by the straddling checkerboard
+    Produces:
+        C => Reordered plaintext according to K1
+    Procedure:
+        Write P as a table with size(K1) rows => T
+        Read T column wise in the order from K1 => C
+            Column mapped to '1' in K1 is read first, etc..
+*/
+
+/**
 Straddling Checkerboard
     Given:
         P => A plaintext message
@@ -87,19 +100,6 @@ Second Transposition:
             Column mapped to '1' in K1 is read first, etc..
 */
 
-/**
-First Transposition:
-    Given:
-        K1 => Key produced from Intermediate Key step
-        P => Plaintext encoded by the straddling checkerboard
-    Produces:
-        C => Reordered plaintext according to K1
-    Procedure:
-        Write P as a table with size(K1) rows => T
-        Read T column wise in the order from K1 => C
-            Column mapped to '1' in K1 is read first, etc..
-*/
-
 object VIC {
     private val r = scala.util.Random
     private val strt = "XYZ"
@@ -109,8 +109,51 @@ object VIC {
 
     private def halveString(s: String) = splitAt(s, s.length / 2)
 
+    def finalize(mi: Int, d: Int, p: List[Int]) = {
+
+    }
+
+    def secondTranspose(k2: List[Int], p: List[Int]) = {
+
+    }
+
     def firstTranspose(k1: List[Int], p: List[Int]) = {
-        // How did I do this in ADFGVX ???
+        val num_over = p.length % k1.length
+        val num_take = p.length / k1.length.toFloat
+        val max = math.ceil(num_take).toInt
+        val min = math.floor(num_take).toInt
+
+        // Divide the message into the columns
+            // Note: Since the columns are shuffled in encryption, a simple grouping wouldn't be correct
+        var iter = p.zipWithIndex
+            .map(a => (a._1, a._2 % k1.length))
+            .sortWith(_._2 < _._2)
+            .map(_._1)
+
+        val cols = (0 to k1.size - 1).map(a => {
+            val num_items = if (a < num_over) max else min
+            val ret = iter.take(num_items)
+            iter = iter.drop(num_items)         // Update the iterator
+            ret.toList
+        }).toList
+
+        k1.zipWithIndex
+          .sortWith(_._1 < _._1)
+          .flatMap(a => cols(a._2))
+    }
+
+    def checker(msg: String, c: List[Int]) = {
+        def adapt(p: (Int, Int)) = (if (p._1 == -1) -1 else c(p._1), c(p._2))
+
+        //val board = new Checkerboard
+        val board = new Checkerboard("ASINTOER  BDGJLPUWY.CFHKMQVXZ#")
+
+        //val s = splitAt(msg.replaceAll(" ", ""), 14)//, r.nextInt(msg.size))
+        //val p = s(1).mkString + strt + s(0).mkString
+        val p = "IVESINVALIDATED.REPORTIMMEDIATELYTOSAFEHOUSE.AWAITEXTRACTIONINSTRUCTIONSWITHINWEEK..ASSIGNEDOBJECT"
+
+        p.map(c => adapt(board.translate(c)))
+            .flatMap(p => if (p._1 == -1) List(p._2) else List(p._1, p._2)).toList
     }
 
     def interKeys(song: String, d: Int, n: Int) = {
@@ -139,21 +182,6 @@ object VIC {
         val c = sequentialize(t1.reverse.take(10).reverse)
 
         (mi, k1, k2, c)
-    }
-
-    def checker(msg: String, c: List[Int]) = {
-        def adapt(p: (Int, Int)) = (if (p._1 == -1) -1 else c(p._1), c(p._2))
-
-        //val board = new Checkerboard
-        val board = new Checkerboard("ASINTOER  BDGJLPUWY.CFHKMQVXZ#")
-
-        val s = splitAt(msg.replaceAll(" ", ""), 14)//, r.nextInt(msg.size))
-        val p = s(1).mkString + strt + s(0).mkString
-
-        val numNulls = (5 - (p.length % 5)) % 5
-
-        (p + "X" * numNulls).map(c => adapt(board.translate(c)))
-            .flatMap(p => if (p._1 == -1) List(p._2) else List(p._1, p._2)).toList
     }
 }
 
