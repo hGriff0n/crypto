@@ -113,8 +113,8 @@ object VIC {
 
     def finalize(mi: Int, d: Int, p: List[Int]) = {
         val g = p.grouped(5).toList
-        val c = g.size - digits(d).last + 1
-        g.take(c) ++ List(digits(mi).toList) ++ g.drop(c)
+        val (front, last) = g.splitAt(g.size - digits(d).last + 1)
+        front ++ List(digits(mi).toList) ++ last
     }
 
     // Add protection against exhausting the key before the message
@@ -216,7 +216,16 @@ object VIC {
     }
 }
 
-class VIC extends Cipher {
-    override def encrypt(msg: String) = msg
+class VIC(song: String, date: Int, n: Int) extends Cipher {
+    override def encrypt(msg: String) = {
+        val (mi, k1, k2, c) = VIC.interKeys("all the people are dead but I'm gonna keep dancing", 391752, 15)
+        val c0 = VIC.checker("ASSIGNED OBJECTIVES INVALIDATED . REPORT IMMEDIATELY TO SAFE HOUSE . AWAIT EXTRACTION INSTRUCTIONS WITHIN WEEK", c)
+        val c1 = VIC.firstTranspose(k1, c0)
+        val c2 = VIC.secondTranspose(k2, c1)
+
+        VIC.finalize(mi, 391752, c2).flatten.map(a => if (a == 10) 0 else a).mkString           // a must be <= 10
+    }
+
+    //msg map(_.asDigit)
     override def decrypt(msg: String) = msg
 }

@@ -17,6 +17,12 @@ object demo {
         val c2 = VIC.secondTranspose(k2, c1)
         val ct = VIC.finalize(mi, 391752, c2)
         println(ct)
+
+        val cipher = new VIC("all the people are dead but I'm gonna keep dancing", 391752, 15)
+        val msg = cipher.encrypt("ASSIGNED OBJECTIVES INVALIDATED . REPORT IMMEDIATELY TO SAFE HOUSE . AWAIT EXTRACTION INSTRUCTIONS WITHIN WEEK")
+
+        println(msg)
+        println(cipher.decrypt(msg))
     }
 }
 
