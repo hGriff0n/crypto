@@ -40,7 +40,8 @@ Chaocipher
 Enigma
 
 ## TODO
-Double check the behavior of utils.columnTranspose
+Double check the behavior of utils.columnTranspose vs VIC.firstTranspose
+where did I get 'take/drop' from, cause that doesn't work in VIC.secondTranspose
 
 -- Most of these are modern ciphers, need to improve organization first
 ## Unimplemented Ciphers

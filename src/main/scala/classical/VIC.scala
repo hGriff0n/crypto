@@ -113,8 +113,35 @@ object VIC {
 
     }
 
+    // Add protection against exhausting the key before the message
+    // Figure out what happens if 1 is the first item
+    // Have a better solution for 'null' (just stop iteration)
     def secondTranspose(k2: List[Int], p: List[Int]) = {
+        var iter = p.iterator
+        val h = math.ceil(p.size / k2.size.toFloat).toInt
+        val i = (1 to k2.size - 2).map(k2.indexOf(_)).iterator
 
+        var t = Array.fill[Int](h, k2.size)(-1)
+        var r = i.next
+
+        for (n <- (0 to h - 2)) {
+            val fill = iter.take(r)
+            t(n) = t(n).map(a => if (fill.hasNext) fill.next else a)
+
+            r = if (r == k2.size - 1) i.next else r + 1
+        }
+
+        val fill = iter.take(p.size % k2.size)
+        t(h - 1) = t(h - 1).map(a => if (fill.hasNext) fill.next else a)
+
+        val c = columnTranspose(
+            t.flatMap(_.map(a => if (a == -1)
+                                    if (iter.hasNext) iter.next else 0      // Use '0' to handle 'null'
+                                 else a).toList).toList, k2.size).toList
+        
+        k2.zipWithIndex
+          .sortWith(_._1 < _._1)
+          .flatMap(a => c(a._2))
     }
 
     def firstTranspose(k1: List[Int], p: List[Int]) = {

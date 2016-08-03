@@ -15,6 +15,7 @@ object demo {
         val c0 = VIC.checker("ASSIGNED OBJECTIVES INVALIDATED . REPORT IMMEDIATELY TO SAFE HOUSE . AWAIT EXTRACTION INSTRUCTIONS WITHIN WEEK", c)
         val c1 = VIC.firstTranspose(k1, c0)
         val c2 = VIC.secondTranspose(k2, c1)
+        val ct = VIC.finalize(mi, 391752, c2)
         println(c2)
     }
 }
