@@ -44,6 +44,7 @@ Double check the behavior of utils.columnTranspose vs VIC.firstTranspose
 where did I get 'take/drop' from, cause that doesn't work in VIC.secondTranspose
 Design the classical teaching interface before starting work on modern ciphers
 Refactor the implementations of classical ciphers and utilities
+Consider adding 'mapWhile' extension method to scala Traversable (usage demo in VIC.scala)
 
 -- Most of these are modern ciphers, need to improve organization first
 ## Unimplemented Ciphers
