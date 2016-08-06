@@ -5,3 +5,15 @@ the user should be able to
 	compose algorithm applications
 
 Add small history/explanation of cipher in class comments
+
+Current ideas:
+	Right now I'm splitting based on raw implementation, but I'll eventually want a more generic framework (probably)
+	As I see it, each cipher is built off of a combination of CipheringContexts. A CipheringContext is a melding between
+	the encryption/decryption rules of the specific cipher. That consists of the mapping from plaintext to ciphertext,
+	the consumption rules for encryption/decryption (ie how many characters are consumed at each "round"), and several
+	other stuff I haven't discovered yet.
+
+CipheringContext (Monads?):
+	Methods for consuming a given amount of input (or for operating as a stream)
+	Methods for encrypting/decrypting input
+	Methods for inspecting operational insides

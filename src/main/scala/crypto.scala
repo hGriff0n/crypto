@@ -2,6 +2,7 @@
 package crypto
 
 import classical._;
+import classical.mapped._;
 import utils._;
 //import spire.algebra._;   // provides algebraic type classes
 //import spire.math._;      // provides functions, types, and type classes
@@ -11,7 +12,7 @@ object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
 
-        val cipher = new Rot13
+        val cipher = new Trifid
 
         println(cipher.mapping.mkString("\n"))
 

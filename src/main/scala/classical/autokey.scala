@@ -1,6 +1,7 @@
 package crypto.classical;
 
 import crypto.utils.{tabula, tabulaSub};
+import crypto.utils.CipherString;
 
 // There's several forms of autokey ciphers
 // Basic Autokey from the American Cryptogram Association
@@ -11,7 +12,7 @@ class Autokey(key: String) extends crypto.Cipher {
         (key + msg).substring(0, msg.length)
 
     override def encrypt(msg: String) = {
-        val m = msg.replaceAll(" ", "").toUpperCase
+        val m = msg.ciphertext
         (for (p <- genKey(m).zip(m)) yield tabula(p._1, p._2)).mkString
     }
 
