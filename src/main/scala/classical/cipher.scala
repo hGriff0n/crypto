@@ -2,11 +2,11 @@ package crypto.classical;
 
 import crypto.utils.CipherString;
 
-trait Cipher extends crypto.Cipher {
+trait BasicCipher extends crypto.Cipher {
     protected var encMap: Map[Char, Char] = Map()
     protected var decMap: Map[Char, Char] = Map()
 
-    def mapping = (encMap, decMap)
+    def mapping = List(encMap, decMap)
 
     def mapenc(msg: String) = for (c <- msg) yield (c, encMap(c))
     def mapdec(msg: String) = for (c <- msg) yield (c, decMap(c))

@@ -23,7 +23,7 @@ class Playfair(key: String) extends crypto.Cipher {
             yield encode(pair, 1)).mkString
 
     // Note: This doesn't handle replacing added X's as there's no way to determine
-        // which ones where added programatically (in the current framework at least) 
+        // which ones where added (in the current framework at least) 
     override def decrypt(msg: String) =
         (for (pair <- msg.sliding(2, 2))
             yield encode(pair, 4)).mkString

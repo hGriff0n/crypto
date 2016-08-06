@@ -1,10 +1,9 @@
 package crypto.classical;
 
 import crypto.utils.modInv;
-import crypto.utils.CipherString;
 
 // TODO: Is there any way I can improve the error reporting ???
-class Affine(a: Int, b: Int) extends Cipher {
+class Affine(a: Int, b: Int) extends BasicCipher {
     private val inv: Int = modInv(a, 26) match {
         case Some(num) => num
         case None => throw new Exception(s"$a and 26 are not coprime")
@@ -17,9 +16,3 @@ class Affine(a: Int, b: Int) extends Cipher {
 }
 
 class Atbash extends Affine(25, 25)
-
-// mapping = (Map[Char, String], Map[Char, String]
-// mapenc = List[(Char, Char)]
-// mapdec = List[(Char, Char)]
-// encrypt = String
-// decrypt = String

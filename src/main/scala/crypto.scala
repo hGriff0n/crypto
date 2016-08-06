@@ -11,9 +11,9 @@ object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
 
-        val cipher = new Atbash
+        val cipher = new Rot13
 
-        println("How are you".plaintext)
+        println(cipher.mapping.mkString("\n"))
 
         val msg = cipher.encrypt("How are you")
         println(msg)

@@ -1,6 +1,7 @@
 package crypto.classical;
 
 import crypto.utils.{Polybius, mixed};
+import crypto.utils.CipherString;
 
 // TODO: Think of changing period to an option
 class Bifid(period: Int) extends crypto.Cipher {
@@ -11,7 +12,7 @@ class Bifid(period: Int) extends crypto.Cipher {
 
     // Note: This method removes spaces from the passed message
     override def encrypt(msg: String) = {
-        val groups = (for (c <- msg.replaceAll(" ",""))
+        val groups = (for (c <- msg.ciphertext)
             yield sq.translate(c))
                 .grouped(if (period == 0) msg.length else period)
                 .map(a => {
@@ -34,6 +35,6 @@ class Bifid(period: Int) extends crypto.Cipher {
                 })
         val res = for (frame <- groups; pair <- frame) yield sq.translate(pair)
         
-        res.mkString
+        res.mkString.plaintext
     }
 }

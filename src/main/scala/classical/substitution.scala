@@ -1,15 +1,14 @@
 package crypto.classical
 
 import crypto.utils.{dvorak, qwerty};
+import crypto.utils.CipherString;
 
-class Substitution(from: String, to: String) extends crypto.Cipher {
-    override def encrypt(msg: String) = for (c <- msg) yield to(from.indexOf(c))
-    override def decrypt(msg: String) = for (c <- msg) yield from(to.indexOf(c))
+class Substitution(from: String, to: String) extends BasicCipher {
+    encMap = from.ciphertext.map(c => c -> to(from.indexOf(c))).toMap
+    decMap = to.ciphertext.map(c => c -> from(to.indexOf(c))).toMap
 }
 
 class Dvorak extends Substitution(dvorak, qwerty)
 class Qwerty extends Substitution(qwerty, dvorak)
 
-class Keyword(key: String) extends Substitution("ABCDEFGHIJKLMNOPQRSTUVWXYZ", key + (key diff "ABCDEFGHIJKLMNOPQRSTUVWXYZ")) {
-    override def encrypt(msg: String) = super.encrypt(msg.toUpperCase.replaceAll(" ", ""))
-} 
+class Keyword(key: String) extends Substitution("ABCDEFGHIJKLMNOPQRSTUVWXYZ", key + (key diff "ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
