@@ -1,10 +1,9 @@
 package crypto.classical;
 
-import crypto.Cipher;
 import crypto.utils.{Polybius, mixed};
 
 // TODO: Think of changing period to an option
-class Bifid(period: Int) extends Cipher {
+class Bifid(period: Int) extends crypto.Cipher {
     private val sq = new Polybius(5, mixed(false))
     //sq.print
 

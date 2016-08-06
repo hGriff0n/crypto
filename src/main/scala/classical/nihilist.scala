@@ -1,9 +1,8 @@
 package crypto.classical;
 
-import crypto.Cipher;
 import crypto.utils.{Polybius, mixed};
 
-class Nihilist(key: String) extends Cipher {
+class Nihilist(key: String) extends crypto.Cipher {
     private val sq = new Polybius(5, mixed(false))
     private val cKey =
         key.toUpperCase.map(c => {

@@ -35,7 +35,7 @@ Beaufort
 Keyword
 
 ## Implementing
-VIC Cipher
+VIC
 Chaocipher
 Enigma
 

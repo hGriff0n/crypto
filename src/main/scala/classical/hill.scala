@@ -1,6 +1,5 @@
 package crypto.classical;
 
-import crypto.Cipher;
 import crypto.utils.modInv;
 import breeze.linalg._;
 import breeze.numerics._;
@@ -27,7 +26,7 @@ object Hill {
 // Encrypt: Multiply each block of n numbers by a n.n matrix
 // Decrypt: Multiply each block of n numbers by the inverse of the matrix
 // Matrix must have an inverse and gcd(det(M), 26) = 1
-class Hill private (m: DenseMatrix[Int], n: Int) extends Cipher {
+class Hill private (m: DenseMatrix[Int], n: Int) extends crypto.Cipher {
     private val inv = modInv(m, 26)
 
     // Note: I store the transpose of the matrix because breeze constructs matrices in column-major order and all my

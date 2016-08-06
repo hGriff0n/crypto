@@ -1,13 +1,12 @@
 package crypto.classical;
 
-import crypto.Cipher;
 import crypto.utils.{tabula, tabulaSub};
 
 // There's several forms of autokey ciphers
 // Basic Autokey from the American Cryptogram Association
     // enc = msg + key
     // map(enc + msg) => ciphertext
-class Autokey(key: String) extends Cipher {
+class Autokey(key: String) extends crypto.Cipher {
     def genKey(msg: String) = 
         (key + msg).substring(0, msg.length)
 

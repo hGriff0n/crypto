@@ -90,4 +90,9 @@ package object utils {
     val everyTwoCharacters = "(?<=\\G.{2})"
     val dvorak = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?"
     val qwerty = "`1234567890[]',.pyfgcrl/=\\aoeuidhtns-;qjkxbmwvz~!@#$%^&*(){}\"<>PYFGCRL?+|AOEUIDHTNS_:QJKXBMWVZ"
+
+    implicit class CipherString(text: String) {
+        def ciphertext = text.toUpperCase.replaceAll(" ", "")
+        def plaintext = text.toLowerCase.replaceAll(" ", "")
+    }
 }

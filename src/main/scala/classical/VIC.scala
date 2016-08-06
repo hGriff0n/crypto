@@ -1,11 +1,8 @@
 package crypto.classical;
 
-import crypto.Cipher;
 import crypto.utils.{sequentialize, chainAdd, digits, columnTranspose, Checkerboard};
 // Procedure from http://everything2.com/user/raincomplex/writeups/VIC+cipher
 
-// TODO: Improve encrypt implementation
-// TODO: Improve organization
 // TODO: Figure out how to decrypt
 
 object VIC {
@@ -219,7 +216,7 @@ object VIC {
     }
 }
 
-class VIC(song: String, date: Int, n: Int) extends Cipher {
+class VIC(song: String, date: Int, n: Int) extends crypto.Cipher {
     override def encrypt(msg: String) = {
         val (mi, k1, k2, c) = VIC.interKeys("all the people are dead but I'm gonna keep dancing", 391752, 15)
         val c0 = VIC.checker("ASSIGNED OBJECTIVES INVALIDATED . REPORT IMMEDIATELY TO SAFE HOUSE . AWAIT EXTRACTION INSTRUCTIONS WITHIN WEEK", c)

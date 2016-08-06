@@ -1,7 +1,7 @@
 package crypto.classical;
 
-import crypto.Cipher;
 import crypto.utils.modInv;
+import crypto.utils.CipherString;
 
 // TODO: Is there any way I can improve the error reporting ???
 class Affine(a: Int, b: Int) extends Cipher {
@@ -10,17 +10,16 @@ class Affine(a: Int, b: Int) extends Cipher {
         case None => throw new Exception(s"$a and 26 are not coprime")
     }
 
-    private def apply(to: Int, a: Int, b: Int) = (to * a + b + 26) % 26
-    private def encode(c: Char, a: Int, b: Int) = c match {
-        case c if lc.contains(c) =>
-            (apply(c.toInt - 97, a, b) + 97).toChar
-        case c if uc.contains(c) =>
-            (apply(c.toInt - 65, a, b) + 65).toChar
-        case c => c
-    }
+    encMap = uc.map(c => c -> encode(c, a, b).toChar).toMap
+    decMap = uc.map(c => c -> encode(c, inv, inv * -b % 26).toChar).toMap
 
-    override def encrypt(msg: String) = for (c <- msg) yield encode(c, a, b)
-    override def decrypt(msg: String) = for (c <- msg) yield encode(c, inv, inv * -b % 26)
+    private def encode(c: Char, a: Int, b: Int) = (((c.toInt - 65) * a + b + 26) % 26) + 'A'
 }
 
 class Atbash extends Affine(25, 25)
+
+// mapping = (Map[Char, String], Map[Char, String]
+// mapenc = List[(Char, Char)]
+// mapdec = List[(Char, Char)]
+// encrypt = String
+// decrypt = String

@@ -11,15 +11,11 @@ object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
 
-        val (mi, k1, k2, c) = VIC.interKeys("all the people are dead but I'm gonna keep dancing", 391752, 15)
-        val c0 = VIC.checker("ASSIGNED OBJECTIVES INVALIDATED . REPORT IMMEDIATELY TO SAFE HOUSE . AWAIT EXTRACTION INSTRUCTIONS WITHIN WEEK", c)
-        val c1 = VIC.firstTranspose(k1, c0)
-        val c2 = VIC.secondTranspose(k2, c1)
-        val ct = VIC.finalize(mi, 391752, c2)
+        val cipher = new Atbash
 
-        val cipher = new VIC("all the people are dead but I'm gonna keep dancing", 391752, 15)
-        val msg = cipher.encrypt("ASSIGNED OBJECTIVES INVALIDATED . REPORT IMMEDIATELY TO SAFE HOUSE . AWAIT EXTRACTION INSTRUCTIONS WITHIN WEEK")
+        println("How are you".plaintext)
 
+        val msg = cipher.encrypt("How are you")
         println(msg)
         println(cipher.decrypt(msg))
     }

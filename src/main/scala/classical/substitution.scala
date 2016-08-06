@@ -1,9 +1,8 @@
 package crypto.classical
 
-import crypto.Cipher;
 import crypto.utils.{dvorak, qwerty};
 
-class Substitution(from: String, to: String) extends Cipher {
+class Substitution(from: String, to: String) extends crypto.Cipher {
     override def encrypt(msg: String) = for (c <- msg) yield to(from.indexOf(c))
     override def decrypt(msg: String) = for (c <- msg) yield from(to.indexOf(c))
 }

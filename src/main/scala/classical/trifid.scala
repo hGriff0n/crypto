@@ -1,6 +1,5 @@
 package crypto.classical;
 
-import crypto.Cipher;
 import crypto.utils.{Polybius, shuffled, columnTranspose};
 
 // A cubic version of a polybius square is created from a mixed alphabet (3x3x3)
@@ -9,7 +8,7 @@ import crypto.utils.{Polybius, shuffled, columnTranspose};
 // The coordinates for each character are written out in columns and then read in rows
 // Before being divided into triplets and translated back through the table
 
-class Trifid extends Cipher {
+class Trifid extends crypto.Cipher {
     private val table = scala.collection.mutable.Map[Char, List[Int]]()
 
     // Populate the table with the character->coordinate mappings

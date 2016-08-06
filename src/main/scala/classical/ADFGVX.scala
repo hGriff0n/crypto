@@ -1,9 +1,8 @@
 package crypto.classical;
 
-import crypto.Cipher;
 import crypto.utils.{Polybius, mixed, columnTranspose};
 
-class ADFGVX(key: String, adfgx: Boolean) extends Cipher {
+class ADFGVX(key: String, adfgx: Boolean) extends crypto.Cipher {
     private val sq = new Polybius(if (adfgx) 5 else 6, mixed(!adfgx))
 
     private val encKey = key.zipWithIndex.sortWith((a, b) => a._1 < b._1).map(_._2).toList

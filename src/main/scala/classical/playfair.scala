@@ -1,9 +1,8 @@
 package crypto.classical;
 
-import crypto.Cipher;
 import crypto.utils.{Polybius,mixed};
 
-class Playfair(key: String) extends Cipher {
+class Playfair(key: String) extends crypto.Cipher {
     val sq = new Polybius(5, key)
 
     private def encode(pair: String, off: Int): String = {
@@ -38,7 +37,7 @@ class Playfair(key: String) extends Cipher {
 // The ciphertext is the characters at the other two corners, taking the upper character first
     // U(rowU, colL) + L(rowL, colU) => CD
 // There is no special handling if a digraph has the same column
-class TwoSquare(uKey: String, lKey: String) extends Cipher {
+class TwoSquare(uKey: String, lKey: String) extends crypto.Cipher {
     protected val upper = new Polybius(5, uKey)
     protected val lower = new Polybius(5, lKey)
 
