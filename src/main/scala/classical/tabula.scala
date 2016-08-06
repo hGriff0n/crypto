@@ -1,17 +1,7 @@
 package crypto.classical
 
 import crypto.utils.{tabula, tabulaSub};
-import crypto.utils.CipherString
-
-// If i can define a "CipherApply" trait/ADT, I can move encode to Cipher and
-    // implement encrypt and decrypt in the Cipher trait (encode would take a CipherApply)
-    // should wait until i get to more complex encryption schemes til I decide
-class Caeser(shft: Int) extends BasicCipher {
-    encMap = uc.map(c => c -> tabula(c, shft)).toMap
-    decMap = uc.map(c => c -> tabulaSub(c, shft)).toMap
-}
-
-class Rot13 extends Caeser(13)
+import crypto.utils.CipherString;
 
 // These ciphers scramble the shift based on location
 class Trithemius extends crypto.Cipher {
