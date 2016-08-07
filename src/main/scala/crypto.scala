@@ -12,13 +12,14 @@ object demo {
     def main(args: Array[String]): Unit = {
         // VIC: ATTACK AT DAWN => ANWHRSANROAEER
 
-        val cipher = new Trifid
-
-        println(cipher.mapping.mkString("\n"))
-
-        val msg = cipher.encrypt("How are you")
+        val cipher = new Caeser(5)
+        
+        // "This is a plaintext message" causes errors (length !/ 3)
+        val msg = cipher.encrypt("how are you")
         println(msg)
         println(cipher.decrypt(msg))
+
+        println(cipher.about)
     }
 }
 

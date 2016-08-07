@@ -8,6 +8,8 @@ trait Cipher {
 
     def encrypt(msg: String): String
     def decrypt(msg: String): String = encrypt(msg).plaintext
+
+    def about = ""
 }
 
 class Iden extends Cipher {

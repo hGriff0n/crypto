@@ -13,7 +13,30 @@ Current ideas:
 	the consumption rules for encryption/decryption (ie how many characters are consumed at each "round"), and several
 	other stuff I haven't discovered yet.
 
-CipheringContext (Monads?):
-	Methods for consuming a given amount of input (or for operating as a stream)
+CipheringContext:
+	Methods for consuming a given amount of input (or for operating as a stream/iterator/monad)
 	Methods for encrypting/decrypting input
 	Methods for inspecting operational insides
+
+Example: Needs more work on the interfacing
+Cipher A {
+	private con = CipheringContext ...
+
+	## Piecewise Encryption/Decryption methods
+	def stepenc(msg) = con >>= msg					## Apply the msg to cons encryption routine. Creates an iterator/stream/monad
+	def stepdec(msg) = con <<= msg					## Apply the msg to cons decryption routine. Creates an iterator/stream/monad
+
+	## Encryption/Decryption methods
+	def encrypt(msg) = stepenc(msg).mkString		## Take the encryption iterator/etc. and convert it to a string
+	def decrypt(msg) = stepdec(msg).mkString		## Take the decryption iterator/etc. and convert it to a string
+
+	## Cipher insight methods
+	def context = con.view							## View the encryption context (ie. mappings/backing structures/etc.)
+}
+
+cipher = new Affine(11, 12)
+
+println(cipher.context)								// View the Affine mapping
+
+for (step <- cipher.stepenc("Hello, World!"))
+	println(step.context)							// View the current status of the encryption
