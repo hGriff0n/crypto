@@ -53,6 +53,7 @@ class Trifid extends crypto.Cipher {
         A trifid cipher is an extension of the polybius square into the third dimension.
         Instead of creating a 5x5 or 6x6 square to handle the translation, a trifid cipher
         Is formed by taking a 3x3x3 cube which each "block" inhabited by a single letter.
+        {TODO: Add history?}
         
         Just like with a polybius square, coding with a trifid cube involves translating
         A character to and from its coordinates in the cubic fields. However, with the
